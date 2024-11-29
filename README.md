@@ -1,0 +1,2 @@
+# blueprints
+Music Assistant blueprints 
