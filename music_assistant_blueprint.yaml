@@ -3,7 +3,7 @@ blueprint:
   name: Music Assistant - Voice (Official)
   source_url: https://github.com/music-assistant/blueprints/blob/main/music_assistant_blueprint.yaml
   description: '
-    ![Image](https://github.com/music-assistant/blueprints/blob/main/assets/cropped-banner.png?raw=true)
+    ![Image](https://github.com/music-assistant/blueprints/blob/main/assets/music-assistant.png?raw=true)
   
     # Play media using voice commands
   
