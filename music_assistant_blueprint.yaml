@@ -1,7 +1,7 @@
 blueprint:
   domain: automation
   name: Music Assistant - Voice (Official)
-  source_url: https://github.com/music-assistant/intents/blob/main/custom_sentences/en/music_assistant_PlayMediaAssist.yaml
+  source_url: https://github.com/music-assistant/blueprints/blob/main/music_assistant_blueprint.yaml
   description: '
     ![Image](https://music-assistant.io/assets/banner.png)
   
