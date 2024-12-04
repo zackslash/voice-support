@@ -193,5 +193,5 @@ actions:
               radio_mode: "{{ radio_mode_boolean }}"
             target:
               entity_id: "{{ mass_player_entity_id }}"
-  - set_conversation_response: "{{ trigger.slots.name }} playing on {{ mass_player_name }}"
+  - set_conversation_response: "{{ trigger.slots.media_name }} playing on {{ mass_player_name }}"
 mode: single
