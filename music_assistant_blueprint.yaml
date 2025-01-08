@@ -84,7 +84,7 @@ triggers:
     id: playlist
   - trigger: conversation
     command:
-      - "(play|listen to) [the ](album|ep|record|compilation|single) {media_name} [by [the ](artist|band|group) {artist}] (in|on|using) [the ]{area_or_player_name}[ (with|using) {radio_mode}]"
+      - "(play|listen to) [the ](album|ep|record|compilation|single) {media_name} [by [the ](artist|band|group) {artist}] [(with|using) {radio_mode}]"
     id: album
   - trigger: conversation
     command:
