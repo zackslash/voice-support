@@ -64,23 +64,23 @@ blueprint:
 triggers:
   - trigger: conversation
     command:
-      - "(play|listen to) [the ](album|ep|record|compilation|single) {media_name} [by [the ](artist|band|group) {artist}] (in|on|using) [the ]{area_or_player_name}[ (with|using) {radio_mode}]"
+      - "(play|listen to) [the ](album|ep|record|compilation|single) {media_name} [by [the ](artist|band|group) {artist}] [(in|on|using) [the ]{area_or_player_name}][ (with|using) {radio_mode}]"
     id: album
   - trigger: conversation
     command:
-      - "(play|listen to) [the ](track|song) {media_name} [by [the ](artist|band|group) {artist}] (in|on|using) [the ]{area_or_player_name}[ (with|using) {radio_mode}]"
+      - "(play|listen to) [the ](track|song) {media_name} [by [the ](artist|band|group) {artist}] [(in|on|using) [the ]{area_or_player_name}][ (with|using) {radio_mode}]"
     id: track
   - trigger: conversation
     command:
-      - "(play|listen to) [the ](artist|band|group) {media_name} (in|on|using) [the ]{area_or_player_name}[ (with|using) {radio_mode}]"
+      - "(play|listen to) [the ](artist|band|group) {media_name} [(in|on|using) [the ]{area_or_player_name}][ (with|using) {radio_mode}]"
     id: artist
   - trigger: conversation
     command:
-      - "(play|listen to) [the ]((radio station)|(radio)|(station)) {media_name} (in|on|using) [the ]{area_or_player_name}"
+      - "(play|listen to) [the ]((radio station)|(radio)|(station)) {media_name} [(in|on|using) [the ]{area_or_player_name}]"
     id: radio
   - trigger: conversation
     command:
-      - "(play|listen to) [the ]playlist {media_name} (in|on|using) [the ]{area_or_player_name}[ (with|using) {radio_mode}]"
+      - "(play|listen to) [the ]playlist {media_name} [(in|on|using) [the ]{area_or_player_name}][ (with|using) {radio_mode}]"
     id: playlist
 conditions: []
 actions:
