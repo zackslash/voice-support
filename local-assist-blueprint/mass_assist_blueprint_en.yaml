@@ -1,24 +1,24 @@
 blueprint:
   domain: automation
-  name: Music Assistant - Voice (Official)
-  source_url: https://github.com/music-assistant/blueprints/blob/main/music_assistant_blueprint.yaml
+  name: Music Assistant - Local(only) Voice Support Blueprint
+  source_url: https://github.com/music-assistant/voice-support/blob/main/local-assist-blueprint/mass_assist_blueprint_en.yaml
   description: '
-    ![Image](https://github.com/music-assistant/blueprints/blob/main/assets/music-assistant.png?raw=true)
-  
+    ![Image](https://github.com/music-assistant/voice-support/blob/main/assets/music-assistant.png?raw=true)
+
     # Play media using voice commands
-  
+
     ### Usage
 
     All sentences must:
-    
+
     * start with the words `Play` or `Listen to` followed by the item type `artist/track/album/playlist/radio station` and then the name of the item
-    
+
     * for album and track be optionally followed by `by (the) artist` and then the artist name
-    
+
     * then be optionally followed by an area name or device name
 
     * then, for artist, track, album or playlist, be optionally followed by the phrase `using radio mode`
-    
+
     #### Acceptable variations
 
     There are acceptable variations to some words and inclusion of the word `the` is optional.
@@ -26,33 +26,33 @@ blueprint:
     #### Examples
 
     ```
-    
+
     Play the artist Pink Floyd in the kitchen
-    
+
     Listen to album Jagged Little Pill in the study
-    
+
     Listen to the album Greatest Hits by the artist James Taylor in the kitchen
-    
+
     Play track New Years Day in the bedroom
-    
+
     Play track New Years Day in the bedroom using radio mode
-    
+
     Play the song A Hard Days Night by Billy Joel in the bedroom
-    
+
     Listen to the playlist Classic Rock in the study
-    
+
     Listen to the radio station BBC Radio 1 in the bedroom
 
     Play the album Classical Nights on the Bedroom Sonos Speaker
-    
+
     Listen to the record Classical Nights on the Bedroom Sonos Speaker
 
     Play the band U2
-    
+
     ```
   '
   input:
-    default_player_entity_id_input: 
+    default_player_entity_id_input:
       name: Default Media Player
       selector:
         entity:
