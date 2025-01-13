@@ -10,7 +10,7 @@ While this support is on the horizon to be added, there is still a lot to invest
 Please reach out if you want to help out or have great ideas!
 If you have something to share here, feel free to PR it or ask to be added to the maintainers.
 
-## Local Assistant Blueprint
+## Option 1: Local Assistant Blueprint
 
 Blueprint to initiate media playback using pure local intent handling (custom sentences) so no Cloud-LLM involved.
 This however means that requests need to be very carefuly formulated.
