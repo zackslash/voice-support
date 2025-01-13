@@ -59,3 +59,43 @@ Listen to the record Classical Nights on the Bedroom Sonos Speaker
 
 Play the band U2
 ```
+
+## Option 2
+
+Script which can be used by an LLM integration like [Open AI Conversation](https://www.home-assistant.io/integrations/openai_conversation/) (ChatGPT) or [Google Generative AI](https://www.home-assistant.io/integrations/google_generative_ai_conversation/) (Gemini).
+
+The script is located in the `llm_script` folder of this repository.
+
+The language of the voice command is not relevant, the script has all descriptions in English, but it will be used by voice commands issued in a different language as well.
+
+### Prerequisites
+
+1. An LLM integration needs to be set up, and used in your Voice pipeline
+2. The script needs to be added to your configuration
+3. The script must be exposed to Assist
+
+### Usage
+
+There is no required format for the sentences, just use anything you can imagine to play music. You can add an area in which it should be played. If the area is ommited from your voice request, it will take the area from which the command is issued.
+
+It will differ per LLM integration how well the commands are understood. If the command is not clear enough, the LLM might ask for more details.
+
+### Examples
+All responses and results are generated each time the script is used, so don't expect the exact same results as below.
+
+- Command: *Play that the album from that grunge band with the baby swimmng towards a bank note on the album cover in the room in which we prepare our meals*
+  
+  Response:  *The album "Nevermind" by Nirvana is now playing in the area in which meals are prepared*
+  
+  Result: The album "Nevermind" will be played in the kitchen
+
+- Command: *Play some classic rock songs*
+  
+  Response: *I've started playing some classic rock songs in the office. Enjoy the music!*
+
+  Result: The following 5 songs are played
+    * Led Zeppelin - Stairway to Heaven
+    * Queen - Bohemian Rhapsody
+    * The Rolling Stones - Paint It Black
+    * The Who - My Generation
+    * AC/DC - Back in Black
