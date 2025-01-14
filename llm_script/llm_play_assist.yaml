@@ -1,10 +1,10 @@
 alias: Voice - Play using Music Assistant
 description: >
   This script is used to play music based on a voice request. The tool takes the
-  following arguments: media_type, artist, album, media_id, area. media_id and
-  media_type are always required and must always be supplied as arguments to
-  this tool. Use the paramters as described in the description of each
-  parameter. Use this tool whenever the user requests to play music.
+  following arguments: media_type, artist, album, media_id, radio_mode, area.
+  media_id and media_type are always required and must always be supplied as
+  arguments to this tool. Use the paramters as described in the description of
+  each parameter. Use this tool whenever the user requests to play music.
 mode: parallel
 max_exceeded: silent
 fields:
@@ -33,7 +33,7 @@ fields:
     required: true
   artist:
     selector:
-      text: null
+      text:
     name: Artist
     description: >
       "artist" is the artist the user requests to play, or the artist of a
@@ -43,7 +43,7 @@ fields:
     required: true
   album:
     selector:
-      text: null
+      text:
     name: Album
     description: >
       "album" is the album the user requests to play, or the album a specific
@@ -55,21 +55,23 @@ fields:
     selector:
       text: null
     name: Media ID
-    description: >
+    description: |
       This argument is mandatory and must always be provided no matter what!
 
       media_id is the most specific from track, album, and artist.  "track" and
 
       "artist" can be a single value or multiple values.
 
-      - If the search is about a track: Then media_id is the track name or a
-      list of 
-        track names (use a semicolon as seperator).  Each track name consist of the 
-        artist and song name, divided by a dash (example: "Artist - Song") If the 
-        artist is not known, it can be omitted.
-      - If the search is about an album: Then media_id is the album name or a
-      list of 
+      - If the search is about a track: Then media_id is the track name or a list of 
+        track names (use a semicolon as seperator). 
+        In case there are multiple artists in the result, use both the artist name and song name 
+        separated by a dash as track name (example: "Artist name - Song name"). 
+        In case all songs are from the same artist, use the artist for the "artist" parameter, 
+        and only use the song names as track name.
+        
+      - If the search is about an album: Then media_id is the album name or a list of 
         album names (use a semicolon as seperator).
+        
       - If the search is about an artist: Then media_id is the artist name.
 
       - If the search is a specific playlist: Then media_id is the requested
@@ -79,6 +81,15 @@ fields:
       channel.
 
       This is a mandatory argument and must always be provided.
+    required: true
+  radio_mode:
+    selector:
+      boolean:
+    name: Radio Mode
+    description: >
+      True or false value thst determines if we set radio mode. If the user asks
+      to use radio mode with their request, then this parameter us true.
+      Otherwise it is false.
     required: true
   area:
     selector:
@@ -107,4 +118,3 @@ sequence:
       }}
     target:
       area_id: "{{ area }}"
-      
