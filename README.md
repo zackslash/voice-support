@@ -64,21 +64,28 @@ Play the band U2
 
 Script which can be used by an LLM integration like [Open AI Conversation](https://www.home-assistant.io/integrations/openai_conversation/) (ChatGPT) or [Google Generative AI](https://www.home-assistant.io/integrations/google_generative_ai_conversation/) (Gemini).
 
-The script is located in the `llm_script` folder of this repository.
+The blueprint is located in the `llm-script-blueprint` folder of this repository and can be imported by using the following button:
+
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fmusic-assistant%2Fvoice-support%2Fblob%2Fmain%2Fllm-script-blueprint%2Fllm_voice_script.yaml)
 
 The language of the voice command is not relevant, the script has all descriptions in English, but it will be used by voice commands issued in a different language as well.
 
-### Prerequisites
+### Configuration
 
 1. An LLM integration needs to be set up, and used in your Voice pipeline
-2. The script needs to be added to your configuration
-3. The script must be exposed to Assist
+2. Allow the LLM integration to access your house, otherwise it won't be able to use the script as a tool
+3. Import the Blueprint using the button above
+4. Create a script using the blueprint, optionally you can adjust the prompt settings which are the basis on how the script will be used by the LLM
+5. Save the script, make sure to give it a clear description, as that is what will be used by the LLM to determine when to use it. 
+
+Suggestion for the script description:
+>   This script is used to play music based on a voice request. The tool takes the following arguments: media_type, artist, album, media_id, radio_mode, area. media_id, media_type, and area are always required and must always be supplied as arguments to this tool. Use the paramters as described in the description of each parameter. Use this tool whenever the user requests to play music.
 
 ### Usage
 
 There is no required format for the sentences, just use anything you can imagine to play music. You can add an area in which it should be played. If the area is ommited from your voice request, it will take the area from which the command is issued.
 
-It will differ per LLM integration how well the commands are understood. If the command is not clear enough, the LLM might ask for more details.
+It will differ per LLM integration how well the commands are understood. If the command is not clear enough, the LLM might ask for more details. Escpecially for smaller models more guidance can be required. If needed you can adjust the prompts used for each parameter.
 
 ### Examples
 All responses and results are generated each time the script is used, so don't expect the exact same results as below.
