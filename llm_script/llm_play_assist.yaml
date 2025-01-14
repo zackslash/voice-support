@@ -53,7 +53,7 @@ fields:
     required: true
   media_id:
     selector:
-      text: null
+      text:
     name: Media ID
     description: |
       This argument is mandatory and must always be provided no matter what!
