@@ -91,7 +91,7 @@ It will differ per LLM integration how well the commands are understood. If the 
 ### Examples
 All responses and results are generated each time the script is used, so don't expect the exact same results as below.
 
-- Command: *Play that the album from that grunge band with the baby swimmng towards a bank note on the album cover in the room in which we prepare our meals*
+- Command: *Play the album from that grunge band with the baby swimmng towards a bank note on the album cover in the room in which we prepare our meals*
   
   Response:  *The album "Nevermind" by Nirvana is now playing in the area in which meals are prepared*
   
