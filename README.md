@@ -77,9 +77,10 @@ The language of the voice command is not relevant, the script has all descriptio
 3. Import the Blueprint using the button above
 4. Create a script using the blueprint, optionally you can adjust the prompt settings which are the basis on how the script will be used by the LLM
 5. Save the script, make sure to give it a clear description, as that is what will be used by the LLM to determine when to use it. 
+6. Expose the script to Assist
 
 Suggestion for the script description:
->   This script is used to play music based on a voice request. The tool takes the following arguments: media_type, artist, album, media_id, radio_mode, area. media_id, media_type, and area are always required and must always be supplied as arguments to this tool. Use the paramters as described in the description of each parameter. Use this tool whenever the user requests to play music.
+>   This script is used to play music based on a voice request. The tool takes the following arguments: media_type, artist, album, media_id, radio_mode, area. media_id, media_type, and area are always required and must always be supplied as arguments to this tool. Use the parameters as described in the description of each parameter. Use this tool whenever the user requests to play music.
 
 ### Usage
 
