@@ -1,7 +1,11 @@
 blueprint:
   name: LLM Script for Music Assitant voice requests
   source_url: https://github.com/music-assistant/voice-support/blob/main/llm-script-blueprint/llm_voice_script.yaml
-  description: Creates a script which will allow voice requests for Music Assistant
+  description: '
+    ![Image](https://github.com/music-assistant/voice-support/blob/main/assets/music-assistant.png?raw=true)
+    
+    # Creates a script which will allow voice requests for Music Assistant
+  '
   domain: script
   author: TheFes
   homeassistant:
