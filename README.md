@@ -78,7 +78,8 @@ The language of the voice command is not relevant, the script has all descriptio
 2. Allow the LLM integration to access your house, otherwise it won't be able to use the script as a tool
 3. Import the Blueprint using the button above
 4. Create a script using the blueprint, optionally you can adjust the prompt settings which are the basis on how the script will be used by the LLM
-5. Save the script, make sure to give it a clear description, as that is what will be used by the LLM to determine when to use it. 
+5. Optionally add additional actions to be performed after the Music Assitant play media step while setting up the script
+5. Save the script, make sure to give it a clear description, as that is what will be used by the LLM to determine when to use it (see example below). 
 6. Expose the script to Assist
 
 Suggestion for the script description:
@@ -86,7 +87,7 @@ Suggestion for the script description:
 
 ### Usage
 
-There is no required format for the sentences, just use anything you can imagine to play music. You can add an area in which it should be played. If the area is ommited from your voice request, it will take the area from which the command is issued.
+There is no required format for the sentences, just use anything you can imagine to play music. You can add an area in which it should be played or a Music assistant player. If the area and Music Assstant player are both ommited from your voice request, it will take the area from which the command is issued. If the area can not be determined (for example if you issued a command from the browser), it will use the default player in case you provided one. If no default player is provided, it will ask to specify an area or player.
 
 It will differ per LLM integration how well the commands are understood. If the command is not clear enough, the LLM might ask for more details. Escpecially for smaller models more guidance can be required. If needed you can adjust the prompts used for each parameter.
 
