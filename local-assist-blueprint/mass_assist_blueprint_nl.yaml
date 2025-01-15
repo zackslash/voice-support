@@ -1,0 +1,192 @@
+blueprint:
+  domain: automation
+  name: Music Assistant - Local(only) Voice Support Blueprint
+  source_url: https://github.com/music-assistant/voice-support/blob/main/local-assist-blueprint/mass_assist_blueprint_nl.yaml
+  description: '
+    ![Image](https://github.com/music-assistant/voice-support/blob/main/assets/music-assistant.png?raw=true)
+
+    # Play media using voice commands
+
+    ### Usage
+
+    All sentences must:
+
+    * start with the words `Speel` or `Luister naar` followed by the item type `artiest/nummer/album/playlist/afspeellijst/radio station` and then the name of the item
+
+    * for album and track be optionally followed by `van/door (de) artiest` and then the artist name
+
+    * then be optionally followed by an area name or device name
+
+    * then, for artist, track, album or playlist, be optionally followed by the phrase `met radio modus aan`
+
+    #### Acceptable variations
+
+    There are acceptable variations to some words and inclusion of the word `the` is optional.
+
+    #### Examples
+
+    ```
+
+    Speel de artiest Pink Floyd in the kitchen
+
+    Luister naar album Jagged Little Pill in het kantoor
+
+    Luister naar het album Greatest Hits van de artiest James Taylor in de keuken
+
+    Speel track New Years Day in the bedroom
+
+    Play nummer New Years Day op de zolder met radio modus aan
+
+    Speel het nummer A Hard Days Night van Billy Joel in the bedroom
+
+    Luister naar de playlist Classic Rock in het kantoor
+
+    Luister naar het radio station BBC Radio 1 in the slaapkamer
+
+    Speel album Classical Nights op de Slaapkamer Sonos Speaker
+
+    Luister naar the record Classical Nights op de Slaapkamer Sonos Speaker
+
+    Speel de band U2
+
+    ```
+  '
+  input:
+    default_player_entity_id_input:
+      name: Default Media Player
+      selector:
+        entity:
+          filter:
+            integration: music_assistant
+            domain: media_player
+
+
+triggers:
+  - trigger: conversation
+    command:
+      - "(speel|luister naar) [de |het ](album|ep|plaat|compilatie|single) {media_name} [by [de| het ](artist|band|group) {artist}] [(in|op|door|met) [de| het ]{area_or_player_name}][ met {radio_mode} aan]"
+    id: album
+  - trigger: conversation
+    command:
+      - "(speel|luister naar) [de| het ](track|nummer|lied[je]) {media_name} [by [de| het ](artist|band|group) {artist}] [(in|op|door|met) [de| het ]{area_or_player_name}][ met {radio_mode} aan]"
+    id: track
+  - trigger: conversation
+    command:
+      - "(speel|luister naar) [de| het ](artist|band|group) {media_name} [(in|op|door|met) [de| het ]{area_or_player_name}][ met {radio_mode} aan]"
+    id: artist
+  - trigger: conversation
+    command:
+      - "(speel|luister naar) [de| het ]((radio station)|(radio)|(station)) {media_name} [(in|op|door|met) [de| het ]{area_or_player_name}]"
+    id: radio
+  - trigger: conversation
+    command:
+      - "(speel|luister naar) [de| het ]playlist {media_name} [(in|op|door|met) [de| het ]{area_or_player_name}][ met {radio_mode} aan]"
+    id: playlist
+conditions: []
+actions:
+  - variables:
+      default_player_entity_id: !input default_player_entity_id_input
+      trigger_id: "{{ trigger.id }}"
+      media_name: "{{ trigger.slots.media_name }}"
+      media_type: |
+        {% if 'radio' in media_name or 'Radio' in media_name %}
+          radio
+        {% else %}
+          {{ trigger_id }}
+        {% endif %}
+      artist: "{{ trigger.slots.artist }}"
+      area_or_player_name: "{{ trigger.slots.area_or_player_name }}"
+      assist_device_id: "{{ trigger.device_id }}"
+      radio_mode_str: "{{ trigger.slots.radio_mode or '' }}"
+      radio_mode: "{{ 'radio' in radio_mode_str.lower() }}"
+      player_entity_id_by_player_name: >
+        {{ expand(integration_entities('music_assistant')) |
+        selectattr("attributes.mass_player_type", 'defined') |
+        selectattr("attributes.friendly_name", 'equalto', area_or_player_name) |
+        join(', ', attribute="entity_id") }}
+      player_entity_id_by_area_name: >
+        {{ expand(area_entities(area_or_player_name)) |
+        selectattr("attributes.mass_player_type", 'defined') |
+        selectattr("attributes.friendly_name", 'equalto', area_or_player_name) |
+        join(', ', attribute="entity_id") }}
+      player_entity_id_by_assist_area: |
+        {% if assist_device_id and area_id(assist_device_id)  %}
+          {{ expand(area_entities(area_id(assist_device_id))) | selectattr("attributes.mass_player_type", 'defined')  | join(', ', attribute="entity_id") }}
+        {% else %}
+          None
+        {% endif %}
+      mass_player_entity_id: |
+        {% if player_entity_id_by_player_name %}
+          {{ player_entity_id_by_player_name }}
+        {% elif player_entity_id_by_area_name %}
+          {{ player_entity_id_by_area_name }}
+        {% elif player_entity_id_by_assist_area  %}
+          {{ player_entity_id_by_assist_area }}
+        {% else %}
+          {{ default_player_entity_id }}
+        {% endif %}
+      mass_player_name: "{{ state_attr(mass_player_entity_id, 'friendly_name') }}"
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ media_type == 'album' }}"
+        sequence:
+          - action: music_assistant.play_media
+            metadata: {}
+            data:
+              media_id: "{{ media_name }}"
+              artist: "{{ artist }}"
+              media_type: "{{ media_type }}"
+              radio_mode: "{{ radio_mode }}"
+            target:
+              entity_id: "{{ mass_player_entity_id }}"
+      - conditions:
+          - condition: template
+            value_template: "{{ media_type == 'track' }}"
+        sequence:
+          - action: music_assistant.play_media
+            metadata: {}
+            data:
+              media_id: "{{ media_name }}"
+              artist: "{{ artist }}"
+              media_type: "{{ media_type }}"
+              radio_mode: "{{ radio_mode }}"
+            target:
+              entity_id: "{{ mass_player_entity_id }}"
+      - conditions:
+          - condition: template
+            value_template: "{{ media_type == 'artist' }}"
+        sequence:
+          - action: music_assistant.play_media
+            metadata: {}
+            data:
+              media_id: "{{ media_name }}"
+              media_type: "{{ media_type }}"
+              radio_mode: "{{ radio_mode }}"
+            target:
+              entity_id: "{{ mass_player_entity_id }}"
+      - conditions:
+          - condition: template
+            value_template: "{{ media_type == 'radio' }}"
+        sequence:
+          - action: music_assistant.play_media
+            metadata: {}
+            data:
+              media_id: "{{ media_name }}"
+              media_type: "{{ media_type }}"
+            target:
+              entity_id: "{{ mass_player_entity_id }}"
+      - conditions:
+          - condition: template
+            value_template: "{{ media_type == 'playlist' }}"
+        sequence:
+          - action: music_assistant.play_media
+            metadata: {}
+            data:
+              media_id: "{{ media_name }}"
+              media_type: "{{ media_type }}"
+              radio_mode: "{{ radio_mode }}"
+            target:
+              entity_id: "{{ mass_player_entity_id }}"
+  - set_conversation_response: "{{ trigger.slots.media_name }} wordt afgespeeld op {{ mass_player_name }}"
+mode: single
