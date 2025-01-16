@@ -92,6 +92,6 @@ actions:
       radio_mode: "{{ result.action_data.radio_mode }}"
     target:
       entity_id: "{{ result.action_data.entity_id }}"
-      area_id: "{{ result.action_data.area_id }}
+      area_id: "{{ result.action_data.area_id }}"
   - set_conversation_response: "{{ query }} playing on"
 mode: single
