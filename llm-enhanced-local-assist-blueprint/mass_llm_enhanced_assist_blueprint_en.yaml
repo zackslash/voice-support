@@ -84,8 +84,8 @@ actions:
       agent_id: "{{ mass_llm }}"
     response_variable: result
   - action: music_assistant.play_media
-    data: "{{ result.action_data }}"
-    target: "{{ result.target_data }}"
+    data: '{{ result.action_data }}'
+    target: '{{ result.target_data }}'
   - set_conversation_response: >- 
       {{ result.action_data.media_id }} playing 
       {%- if 'entity_id' in result.target_data %}
