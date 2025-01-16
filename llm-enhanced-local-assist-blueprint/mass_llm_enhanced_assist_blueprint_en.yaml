@@ -62,10 +62,10 @@ blueprint:
             domain: media_player
     mass_llm_id_input:
       name: Music Assistant LLM
-        selector:
-          entity:
-            filter:
-              domain: conversation
+      selector:
+        entity:
+          filter:
+            domain: conversation
 triggers:
   - trigger: conversation
     command:
