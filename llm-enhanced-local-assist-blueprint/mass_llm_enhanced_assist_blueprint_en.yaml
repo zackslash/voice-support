@@ -80,17 +80,17 @@ actions:
       mass_llm: !input mass_llm_id_input
   - action: conversation.process
     data:
-      text: {{ query }}
-      agent_id: {{ mass_llm }}
+      text: "{{ query }}"
+      agent_id: "{{ mass_llm }}"
     response_variable: result
   - stop: ""
     response_variable: result
   - action: music_assistant.play_media
     data:
-      media_id: "{{ media_name }}"
-      media_type: "{{ media_type }}"
-      radio_mode: "{{ radio_mode }}"
+      media_id: ""
+      media_type: ""
+      radio_mode: ""
     target:
-      entity_id: "{{ mass_player_entity_id }}"
-  - set_conversation_response: "{{ trigger.slots.media_name }} playing on {{ mass_player_name }}"
+      entity_id: ""
+  - set_conversation_response: "{{ query }} playing on"
 mode: single
