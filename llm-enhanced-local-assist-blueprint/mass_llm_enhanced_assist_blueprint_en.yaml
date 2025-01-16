@@ -85,11 +85,28 @@ actions:
     response_variable: result
   - action: music_assistant.play_media
     data:
-      media_id: '{{ result.action_data["media_id"] }}'
-      media_type: '{{ result.action_data["media_type"] }}'
-      radio_mode: '{{ result.action_data["radio_mode"] }}'
+      media_id: '{{ result.action_data.media_id }}'
+      media_type: '{{ result.action_data.media_type }}'
+      radio_mode: '{{ result.action_data.radio_mode }}'
+      {%- if 'artist' in result.action_data %}
+      artist: '{{ result.action_data.artist }}'
+      {%- endif %}
+      {%- if 'album' in result.action_data %}
+      album: '{{ result.action_data.album }}'
+      {%- endif %}
     target:
-      entity_id: '{{ result.target_data["entity_id"] }}'
-      area_id: '{{ result.target_data["area_id"] }}'
-  - set_conversation_response: '{{ result.action_data["media_id"] }} playing on'
+      {%- if 'entity_id' in result.target_data %}
+      entity_id: '{{ result.target_data.entity_id }}'
+      {%- endif %}
+      {%- else %}
+      area_id: '{{ result.target_data.area_id }}'
+      {%- endif %}
+  - set_conversation_response: >- 
+      {{ result.action_data.media_id }} playing 
+      {%- if 'entity_id' in result.target_data %}
+      on {{ result.target_data.entity_id }}.
+      {%- endif %}
+      {%- else %}
+      in the {{ result.target_data.area_id }}.
+      {%- endif %}
 mode: single
