@@ -87,7 +87,7 @@ actions:
     data:
       media_id: '{{ result.action_data["media_id"] }}'
       media_type: '{{ result.action_data["media_type"] }}'
-      radio_mode: '{{ result.action_data.["radio_mode"] }}'
+      radio_mode: '{{ result.action_data["radio_mode"] }}'
     target:
       entity_id: '{{ result.target_data["entity_id"] }}'
       area_id: '{{ result.target_data["area_id"] }}'
