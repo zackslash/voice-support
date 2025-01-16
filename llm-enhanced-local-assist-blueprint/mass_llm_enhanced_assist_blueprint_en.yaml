@@ -1,6 +1,6 @@
 blueprint:
   domain: automation
-  name: Music Assistant - Local(only) Voice Support Blueprint
+  name: Music Assistant - Local LLM Enhanced Voice Support Blueprint
   source_url: https://github.com/music-assistant/voice-support/blob/main/local-assist-blueprint/mass_llm_enhanced_assist_blueprint_en.yaml
   description: '
     ![Image](https://github.com/music-assistant/voice-support/blob/main/assets/music-assistant.png?raw=true)
