@@ -90,7 +90,6 @@ actions:
       {{ result.action_data.media_id }} playing 
       {%- if 'entity_id' in result.target_data %}
       on {{ result.target_data.entity_id }}.
-      {%- endif %}
       {%- else %}
       in the {{ result.target_data.area_id }}.
       {%- endif %}
