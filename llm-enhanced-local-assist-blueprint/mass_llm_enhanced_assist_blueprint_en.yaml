@@ -83,14 +83,16 @@ actions:
       text: "{{ query }}"
       agent_id: "{{ mass_llm }}"
     response_variable: result
+  - variables:
+      llm_result: '{{ result.response.speech.plain.speech | from_json }}'
   - action: music_assistant.play_media
-    data: '{{ result.action_data | from_json }}'
-    target: '{{ result.target_data | from_json }}'
+    data: '{{ llm_result.action_data }}'
+    target: '{{ llm_result.target_data }}'
   - set_conversation_response: >- 
-      {{ result.action_data.media_id }} playing 
-      {%- if 'entity_id' in result.target_data %}
-      on {{ result.target_data.entity_id }}.
+      {{ llm_result.action_data.media_id }} playing 
+      {%- if 'entity_id' in llm_result.target_data %}
+      on {{ llm_result.target_data.entity_id }}.
       {%- else %}
-      in the {{ result.target_data.area_id }}.
+      in the {{ llm_result.target_data.area_id }}.
       {%- endif %}
 mode: single
