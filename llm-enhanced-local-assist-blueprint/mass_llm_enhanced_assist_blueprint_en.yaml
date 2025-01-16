@@ -84,23 +84,8 @@ actions:
       agent_id: "{{ mass_llm }}"
     response_variable: result
   - action: music_assistant.play_media
-    data:
-      media_id: '{{ result.action_data.media_id }}'
-      media_type: '{{ result.action_data.media_type }}'
-      radio_mode: '{{ result.action_data.radio_mode }}'
-      {%- if 'artist' in result.action_data %}
-      artist: '{{ result.action_data.artist }}'
-      {%- endif %}
-      {%- if 'album' in result.action_data %}
-      album: '{{ result.action_data.album }}'
-      {%- endif %}
-    target:
-      {%- if 'entity_id' in result.target_data %}
-      entity_id: '{{ result.target_data.entity_id }}'
-      {%- endif %}
-      {%- else %}
-      area_id: '{{ result.target_data.area_id }}'
-      {%- endif %}
+    data: {{ result.action_data }}
+    target: {{ result.target_data }}
   - set_conversation_response: >- 
       {{ result.action_data.media_id }} playing 
       {%- if 'entity_id' in result.target_data %}
