@@ -83,8 +83,6 @@ actions:
       text: "{{ query }}"
       agent_id: "{{ mass_llm }}"
     response_variable: result
-  - stop: ""
-    response_variable: result
   - action: music_assistant.play_media
     data:
       media_id: "{{ result.action_data.media_id }}"
