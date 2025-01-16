@@ -5,19 +5,16 @@ blueprint:
   description: '
     ![Image](https://github.com/music-assistant/voice-support/blob/main/assets/music-assistant.png?raw=true)
 
-    # Play media using voice commands
+    # Play media using voice commands with LLM assistance
 
     ### Usage
 
     All sentences must:
 
-    * start with the words `Play` or `Listen to` followed by the item type `artist/track/album/playlist/radio station` and then the name of the item
-
-    * for album and track be optionally followed by `by (the) artist` and then the artist name
+    * start with the words `Play` or `Listen to` followed by a query about what you want to play
 
     * then be optionally followed by an area name or device name
 
-    * then, for artist, track, album or playlist, be optionally followed by the phrase `using radio mode`
 
     #### Acceptable variations
 
@@ -49,6 +46,10 @@ blueprint:
 
     Play the band U2
 
+    Play music by the composer from oppenheimer
+
+    Play the album that has the nude baby swimming in the water on the cover
+
     ```
   '
   input:
@@ -64,24 +65,8 @@ blueprint:
 triggers:
   - trigger: conversation
     command:
-      - "(play|listen to) [the ](album|ep|record|compilation|single) {media_name} [by [the ](artist|band|group) {artist}] [(in|on|using) [the ]{area_or_player_name}][ (with|using) {radio_mode}]"
-    id: album
-  - trigger: conversation
-    command:
-      - "(play|listen to) [the ](track|song) {media_name} [by [the ](artist|band|group) {artist}] [(in|on|using) [the ]{area_or_player_name}][ (with|using) {radio_mode}]"
-    id: track
-  - trigger: conversation
-    command:
-      - "(play|listen to) [the ](artist|band|group) {media_name} [(in|on|using) [the ]{area_or_player_name}][ (with|using) {radio_mode}]"
-    id: artist
-  - trigger: conversation
-    command:
-      - "(play|listen to) [the ]((radio station)|(radio)|(station)) {media_name} [(in|on|using) [the ]{area_or_player_name}]"
-    id: radio
-  - trigger: conversation
-    command:
-      - "(play|listen to) [the ]playlist {media_name} [(in|on|using) [the ]{area_or_player_name}][ (with|using) {radio_mode}]"
-    id: playlist
+      - "(play|listen to) {query}"
+    id: llm
 conditions: []
 actions:
   - variables:
