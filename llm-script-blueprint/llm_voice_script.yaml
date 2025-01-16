@@ -15,8 +15,7 @@ blueprint:
     * **Make sure to give the script a clear description.** An example can be found below.
 
     * It is possible to add additional actions to be performed after the Music Assistant
-    play media action. You can do that below. There are several variables available which
-    are descrbed below.
+    play media action. There are several variables available which are described below.
 
 
     ## Example for script description
