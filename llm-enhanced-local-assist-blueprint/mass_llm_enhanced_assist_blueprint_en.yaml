@@ -86,12 +86,11 @@ actions:
   - stop: ""
     response_variable: result
   - action: music_assistant.play_media
-      metadata: {}
-        data:
-          media_id: "{{ media_name }}"
-          media_type: "{{ media_type }}"
-          radio_mode: "{{ radio_mode }}"
-        target:
-          entity_id: "{{ mass_player_entity_id }}"
+    data:
+      media_id: "{{ media_name }}"
+      media_type: "{{ media_type }}"
+      radio_mode: "{{ radio_mode }}"
+    target:
+      entity_id: "{{ mass_player_entity_id }}"
   - set_conversation_response: "{{ trigger.slots.media_name }} playing on {{ mass_player_name }}"
 mode: single
