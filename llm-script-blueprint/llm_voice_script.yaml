@@ -1,11 +1,67 @@
 blueprint:
   name: LLM Script for Music Assitant voice requests
   source_url: https://github.com/music-assistant/voice-support/blob/main/llm-script-blueprint/llm_voice_script.yaml
-  description: '
-    ![Image](https://github.com/music-assistant/voice-support/blob/main/assets/music-assistant.png?raw=true)
-    
+  description:
+    "![Image](https://github.com/music-assistant/voice-support/blob/main/assets/music-assistant.png?raw=true)
+
     # Creates a script which will allow voice requests for Music Assistant
-  '
+
+    * None of the settings below are required to change for this script to work. But it
+    could be that for your specific LLM integration some finetuning is required. To do
+    that you can adjust the prompts sent to the LLM.
+
+    * **Make sure to expose the script to Assist after creating it.**
+
+    * **Make sure to give the script a clear description.** An example can be found below.
+
+    * It is possible to add additional actions to be performed after the Music Assistant
+    play media action. There are several variables available which are described below.
+
+
+    ## Example for script description
+
+    `This script is used to play music based on a voice request. The tool takes the
+    following arguments: media_type, artist, album, media_id, radio_mode, area. media_id and 
+    media_type are always required and must always be supplied as arguments to this tool.
+    An area or Music Assistant media player can optionally be provided in the voice request
+    as well. Use the parameters as described in the description of each parameter. Use this
+    tool whenever the user requests to play music.`
+
+    ## Available variables for additional actions
+
+    |Variable|Description|
+
+    |---|---|
+
+    |`media_id`|The general description of the media, can be a song name, radio station,
+    album name, etc. In case there are multiple values (e.g. 5 song titles) they will be
+    seperated by a semicolon (`;`)|
+
+    |`media_type`|Will be one of the following: `'track'`, `'artist'`, `'album'`,
+    `'playlist'`, `'radio'`|
+
+    |`artist`|The artist requested in the voice command. Will be empty in case the artist
+    is not relevant or when there are multiple artists requested|
+
+    |`album`|The album requested in the voice command, will be empty in case the album is
+    not relevant or when multiple albums are requested|
+
+    |`area`|The area(s) determined by the LLM in which the request will be played. The
+    variable will undefined in case there was no area information, in case it is defined
+    it will be a list of area_id's|
+
+    |`media_player`|The Music Assitant media player(s) determined by the LLM on which the
+    request will be played. The variable will be undefined in case there was no media
+    player provided in the request, in case it it defined it should be a list entity_id's,
+    but it could be the LLM provided names instead.
+
+    |`default_player`|The default player provided when setting up the script, will be
+    `none` in case no player is provided|
+
+    |`target_data`|The target data based on the input by the LLM, and `default_player`.
+    It will be a dictionary with the keys `area_id` and `entity_id`. The value will be
+    (a list of) id's relevant for the key or `'NA'` in case it was not used. Example:
+    `{'area_id': ['living_room'], 'entity_id', 'NA'}`|"
   domain: script
   author: TheFes
   homeassistant:
@@ -14,21 +70,24 @@ blueprint:
     music_assistant_settings:
       name: Settings for Music Assistant playback
       icon: mdi:music
-      description: "You can use these settings how Music Assistant playback is handled"
+      description: You can use these settings how Music Assistant playback is handled
       input:
         default_player:
           name: Default Player
           description:
-            "The default Music Assistant player which will be used in case it is not clear
-            from the request in which area or on which player the request should be played
+            "The default Music Assistant player which will be used in case
+            it is not clear from the request in which area or on which player the
+            request should be played
 
             Leave empty in case you do not want a default player"
           selector:
             entity:
               filter:
-                integration: music_assistant
-                domain: media_player
-          default: null
+                - integration: music_assistant
+                  domain:
+                    - media_player
+              multiple: false
+          default:
         play_continuously:
           name: Play Continuously
           description:
@@ -57,8 +116,8 @@ blueprint:
       name: Prompt settings for the LLM
       icon: mdi:robot
       description:
-        "You can use these settings to finetune the prompts for your specific
-        LLM (model).  In most cases the defaults should be fine."
+        You can use these settings to finetune the prompts for your specific
+        LLM (model).  In most cases the defaults should be fine.
       collapsed: true
       input:
         media_type_prompt:
@@ -69,7 +128,8 @@ blueprint:
               multiline: true
               multiple: false
           default:
-            'This argument is mandatory and must always be provided no matter what!
+            'This argument is mandatory and must always be provided no matter
+            what!
 
             "media_type" can only be one of 5 different values:
 
@@ -119,7 +179,8 @@ blueprint:
               multiline: true
               multiple: false
           default:
-            'This argument is mandatory and must always be provided no matter what!
+            'This argument is mandatory and must always be provided no matter
+            what!
 
             media_id is the most specific from track, album, and artist.
 
@@ -132,12 +193,13 @@ blueprint:
             In case all songs are from the same artist, use the artist for the "artist"
             parameter, and only use the song names as track name.
 
-            - If the search is about an album: Then media_id is the album name or a list
-            of album names (use a semicolon as seperator).
+            - If the search is about an album: Then media_id is the album name or
+            a list of album names (use a semicolon as seperator).
 
             - If the search is about an artist: Then media_id is the artist name.
 
-            - If the search is a specific playlist: Then media_id is the requested playlist.
+            - If the search is a specific playlist: Then media_id is the requested
+            playlist.
 
             - If the search is a radio channel: Then media_id is the requested channel.
 
@@ -150,8 +212,8 @@ blueprint:
               multiline: true
               multiple: false
           default:
-            'The area or areas for which the music is requested. In case no area is
-            provided, use the area the request comes from.
+            'The area or areas for which the music is requested. In case no
+            area is provided, use the area the request comes from.
 
             In case the area can not be determined from the request, or the device
             the request comes from, no not use this parameter
@@ -174,10 +236,10 @@ blueprint:
       name: Additional actions
       icon: mdi:wrench
       description:
-        "You can add additional actions to be performed after the Music Assistant
-        play media action is started.
-        Variables which can always be used are media_id, media_type, album, artist.
-        Based on the request the variables area and media_player can also be available"
+        You can add additional actions to be performed after the Music
+        Assistant play media action is started. Variables which can always be used
+        are media_id, media_type, album, artist. Based on the request the variables
+        area and media_player can also be available
       collapsed: true
       input:
         actions:
@@ -187,7 +249,9 @@ blueprint:
           default: []
 mode: parallel
 max_exceeded: silent
-description: "This script is used to play music based on a voice request Use the paramters as described in the description of each parameter."
+description:
+  This script is used to play music based on a voice request Use the paramters
+  as described in the description of each parameter.
 fields:
   media_type:
     selector:
@@ -240,19 +304,18 @@ fields:
 sequence:
   - variables:
       default_player: !input default_player
-      player_data: >
-        {% set ma = integration_entities('music_assistant') %}
+      player_data: "{% set ma = integration_entities('music_assistant') %}
         {% set ma_names = ma | map('state_attr', 'friendly_name') | list %}
         {% set ns = namespace(players=[]) %}
         {% for player in media_player | default([], true) %}
-          {% if player in ma %}
-            {% set ns.players = ns.players + [player] %}
-          {% elif player in ma_names %}
-            {% set entity = ma | select('is_state_attr', 'friendly_name', player) | list %}
-            {% set ns.players = ns.players + entity %}
-          {% endif %}
+        {% if player in ma %}
+        {% set ns.players = ns.players + [player] %}
+        {% elif player in ma_names %}
+        {% set entity = ma | select('is_state_attr', 'friendly_name', player) | list %}
+        {% set ns.players = ns.players + entity %}
+        {% endif %}
         {% endfor %}
-        {{ ns.players }}
+        {{ ns.players }}"
       target_data:
         area_id: "{{ area | default('NA', true) }}"
         entity_id: "{{ (player_data or default_player) | default('NA', true) }}"
@@ -262,17 +325,20 @@ sequence:
       - condition: template
         value_template: "{{ not (area | default or player_data or default_player) }}"
     then:
-      - stop: "No valid target for Music Assistant Voice script found"
+      - stop: No valid target for Music Assistant Voice script found
         response_variable: invalid_target
   - variables:
       play_continuously: !input play_continuously
       action_data:
-        media_id: "{{ media_id.split(';') | map('trim') | list if ';' in media_id else media_id }}"
+        media_id:
+          "{{ media_id.split(';') | map('trim') | list if ';' in media_id
+          else media_id }}"
         media_type: "{{ media_type }}"
         artist: "{{ artist | default('NA', true) }}"
         album: "{{ album | default('NA', true) }}"
-        radio_mode: >
-          {{ false if play_continuously == 'Never' else play_continuously == 'Always' and media_type != 'radio' or 'NA' }}
+        radio_mode:
+          "{{ false if play_continuously == 'Never' else play_continuously
+          == 'Always' and media_type != 'radio' or 'NA' }}"
   - alias: Play music using Music Assistant
     action: music_assistant.play_media
     data: "{{ dict(action_data.items() | rejectattr('1', 'eq', 'NA')) }}"
