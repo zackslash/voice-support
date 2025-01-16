@@ -83,7 +83,7 @@ The language of the voice command is not relevant, the script has all descriptio
 6. Expose the script to Assist
 
 Suggestion for the script description:
->   This script is used to play music based on a voice request. The tool takes the following arguments: media_type, artist, album, media_id, radio_mode, area. media_id, media_type are always required and must always be supplied as arguments to this tool. An area or Music Assistant media player can optionally be provided in the voice request as well. Use the parameters as described in the description of each parameter. Use this tool whenever the user requests to play music.
+>   This script is used to play music based on a voice request. The tool takes the following arguments: media_type, artist, album, media_id, radio_mode, area. media_id and media_type are always required and must always be supplied as arguments to this tool. An area or Music Assistant media player can optionally be provided in the voice request as well. Use the parameters as described in the description of each parameter. Use this tool whenever the user requests to play music.
 
 ### Usage
 
