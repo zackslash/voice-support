@@ -338,10 +338,11 @@ triggers:
     command:
       - "(play|listen to) {query}"
 actions:
-  - alias: Store default player in a variable so it can be used in the LLM prompt
+  - alias: Store input from blueprint in variables so they can be used in the prompt
     variables:
       expose_areas: !input expose_areas
       expose_players: !input expose_players
+      play_continuously: !input play_continuously
       area_names: "{{ integration_entities('music_assistant')  | map('area_name') | 
         join(', ') }}"
       player_names: "{{ integration_entities('music_assistant') | map('state_attr', 
