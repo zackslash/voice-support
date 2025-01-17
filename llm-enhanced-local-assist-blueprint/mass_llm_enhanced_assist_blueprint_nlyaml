@@ -59,7 +59,7 @@ blueprint:
           filter:
             domain: conversation
     music_assistant_settings:
-      name: Intstellingen voor afspelen via Music Assistant
+      name: Instellingen voor afspelen via Music Assistant
       icon: mdi:music
       description: Je kunt deze instellingen gebruiken om te bepalen hoe Music Assistant
         de muziek afspeelt
