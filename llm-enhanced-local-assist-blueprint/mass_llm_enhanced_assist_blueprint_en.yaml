@@ -194,7 +194,7 @@ blueprint:
             ["area name"], "players": ["player name"]}}
             
 
-            The argument "meda_type" is mandatory and must always be provided no matter 
+            The argument "media_type" is mandatory and must always be provided no matter 
             what!
             
             "media_type" can only be one of 5 different values:
@@ -215,7 +215,7 @@ blueprint:
             "media_id" parameter.
             
 
-            The argument "meda_id" is also mandatory and must always be provided no 
+            The argument "media_id" is also mandatory and must always be provided no 
             matter what!
             
             media_id is the most specific from track, album, and artist.
