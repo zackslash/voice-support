@@ -309,14 +309,15 @@ blueprint:
             {% if expose_areas %}In case the query requests the music to be played in 
             one more areas in which a Music Assitant player is located, use {"areas": 
             ["area name"]} for "target_data" Always use a list with area names, also 
-            when there is only one. {% endif %}When no area is mentioned in the voice 
-            request, use {"areas":[]}}
+            when there is only one. When no area is mentioned in the voice 
+            request, use {"areas":[]}}{% endif %}{% if expose_players %}Use {"areas":[]}}
+            {% endif %}
             
             {% if expose_players %}In case the query request the music to be played on 
             one or more music assistant players, use {"players": ["player name"]} for 
             "target_data" Always use a list with the player names, also when there is 
-            only one. {% endif %}When no player is mentioned in the voice request, use 
-            {"players":[]}
+            only one. When no player is mentioned in the voice request, use {"players":[]}
+            {% endif %}{% if expose_areas %}Use {"players":[]}}{% endif %}
             
             
             {% if not (expose_areas or expose_players) %}Use the following for 
@@ -368,16 +369,16 @@ actions:
         dict(entity_id=default_player) }}"
       target_data: "{{ llm_target_data if llm_target else backup_target }}"
       target: "{{ dict(target_data.items() | selectattr('1')) }}"
-    - alias: Only try to play music when target was determined
-      if: 
-        - alias: Check if LLM was able to determine target
-          condition: template
-          value_template: "{{ iif(target) }}"
-      then:
-        - alias: Play Music based on LLM result
-          action: music_assistant.play_media
-          data: '{{ llm_result.action_data }}'
-          target: '{{ target }}'
+  - alias: Only try to play music when target was determined
+    if: 
+      - alias: Check if LLM was able to determine target
+        condition: template
+        value_template: "{{ iif(target) }}"
+    then:
+      - alias: Play Music based on LLM result
+        action: music_assistant.play_media
+        data: '{{ llm_result.action_data }}'
+        target: '{{ target }}'
   - alias: Set variables for responses
     variables:
       responses:
