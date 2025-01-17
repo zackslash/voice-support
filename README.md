@@ -76,7 +76,7 @@ The blueprint is located in the `llm-enhanced-local-assist-blueprint` folder of 
 
 ### Configuration
 
-1. An LLM integration needs to be set up. This can be an already existing integration, but it should not be one that allows home control (assist option). If you want to use an existing LLM with Home Control, see [Option 3](#option-3-script-which-can-be-used-as-a-tool-by-an-llm-integration-like-open-ai-conversation-chatgpt-or-google-generative-ai-gemini).
+1. An LLM integration needs to be set up. This can be an already existing integration. This automation is intended to be used with an LLM Conversation Agent which doesn't allow home control (No control selected instead of Assist). Usage with an LLM which has control over your entities can result in errors, like targeting a media player which isn't a Music Assistant player. If you want to use an existing LLM with home control enabled, [Option 3](#option-3-script-which-can-be-used-as-a-tool-by-an-llm-integration-like-open-ai-conversation-chatgpt-or-google-generative-ai-gemini) is the preferred option.
 2. Import the Blueprint using the button above.
 3. Create the automation using the blueprint. Choose the LLM agent from step 1. Optionally you can change settings for Music Assistant playback such as a default player, and whether to use Play Continously. You can also adjust the way voice responses are created as well as tweak the LLM Prompt as needed for your particular model. See the setting descriptions for more information.
 4. Save the automation.
