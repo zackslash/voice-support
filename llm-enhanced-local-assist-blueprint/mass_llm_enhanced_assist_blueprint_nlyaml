@@ -85,8 +85,7 @@ blueprint:
           description: 'Deze instelling bepaalt hoe de "radio_mode" instelling gebruikt
             moet worden bij het afspelen van de media.
 
-            Als dit op "Altijd" staat, zal Music Assistant altijd media blijven toevoegen
-            nadat het de media uit het commonda gespeeld is.
+            Als dit op "Altijd" staat, zal Music Assistant proberen 'radio modus' in te schakelen voor de geselecteerde media, wat wil zeggen dat een mix wordt gemaakt van de muziek van jouw selectie en gelijkwaardige nummers.
 
             Als dit op "Nooit" staat, zal Music Assistant alleen de media afspelen die je hebt gevraagd.
             
