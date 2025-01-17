@@ -88,8 +88,7 @@ blueprint:
             Als dit op "Altijd" staat, zal Music Assistant altijd media blijven toevoegen
             nadat het de media uit het commonda gespeeld is.
 
-            Als dit op "Nooit" staat, zal Music Assistant stoppen nadat de door de LLM 
-            geselecteerde media gespeeld is.
+            Als dit op "Nooit" staat, zal Music Assistant alleen de media afspelen die je hebt gevraagd.
             
             Wanner dit op "Gebruik mediaspeler instelling" staat, zal het de instellingen
             uit Music Assistant voor het betreffende apparaat gebruiken.'
