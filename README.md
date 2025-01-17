@@ -68,9 +68,44 @@ Listen to the record Classical Nights on the Bedroom Sonos Speaker
 Play the band U2
 ```
 
-## Option 2
+## Option 2 Local Assist enhanced by an LLM integration like [Open AI Conversation](https://www.home-assistant.io/integrations/openai_conversation/) (ChatGPT) or [Google Generative AI](https://www.home-assistant.io/integrations/google_generative_ai_conversation/) (Gemini).
 
-Script which can be used by an LLM integration like [Open AI Conversation](https://www.home-assistant.io/integrations/openai_conversation/) (ChatGPT) or [Google Generative AI](https://www.home-assistant.io/integrations/google_generative_ai_conversation/) (Gemini).
+The blueprint is located in the `llm-enhanced-local-assist-blueprint` folder of this repository and can be imported by using the following button:
+
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fmusic-assistant%2Fvoice-support%2Fblob%2Fmain%2Fllm-enhanced-local-assist-blueprint%2Fmass_llm_enhanced_assist_blueprint_en.yaml)
+
+### Configuration
+
+1. An LLM integration needs to be set up. This can be an already existing integration, but it should not be one that allows home control (assist option). If you want to use an existing LLM with Home Control, see [Option 3](#option-3-script-which-can-be-used-as-a-tool-by-an-llm-integration-like-open-ai-conversation-chatgpt-or-google-generative-ai-gemini).
+2. Import the Blueprint using the button above.
+3. Create the automation using the blueprint. Choose the LLM agent from step 1. Optionally you can change settings for Music Assistant playback such as a default player, and whether to use Play Continously. You can also adjust the way voice responses are created as well as tweak the LLM Prompt as needed for your particular model. See the setting descriptions for more information.
+4. Save the automation.
+
+### Usage
+All sentences must:
+
+- start with the words Play or Listen to followed by a query about what you want to play
+- then be optionally followed by one or more area namea and/or one or more device names to play the music on
+
+### Examples
+*see the translated blueprints for translated examples*
+
+```
+Play the best songs from Pink Floyd in the kitchen
+Listen Jagged Little Pill in the study
+Listen to the album Greatest Hits by James Taylor in the kitchen
+Play track New Years Day in the bedroom
+Play A Hard Days Night by Billy Joel in the bedroom
+Listen to the playlist Classic Rock in the study
+Listen to BBC Radio 1 in the bedroom
+Play the album Classical Nights on the Bedroom Sonos Speaker
+Listen to the record Classical Nights on the Bedroom Sonos Speaker
+Play songs by U2
+Play music by the composer from oppenheimer
+Play the album that has the nude baby swimming in the water on the cover
+```
+
+## Option 3: Script which can be used as a tool by an LLM integration like [Open AI Conversation](https://www.home-assistant.io/integrations/openai_conversation/) (ChatGPT) or [Google Generative AI](https://www.home-assistant.io/integrations/google_generative_ai_conversation/) (Gemini).
 
 The blueprint is located in the `llm-script-blueprint` folder of this repository and can be imported by using the following button:
 
