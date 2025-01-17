@@ -61,7 +61,7 @@ blueprint:
     music_assistant_settings:
       name: Settings for Music Assistant playback
       icon: mdi:music
-      description: You can use these settings how Music Assistant playback is handled
+      description: You can use these settings to adjust how Music Assistant playback is handled
       input:
         default_player:
           name: Default Player
@@ -211,7 +211,7 @@ blueprint:
             
             media_type is mandatory and must always be provided. In case a request does 
             not match any of these types, for example when music from a specific genre is 
-            requested, then us "track" and provide a list of matching songs for the 
+            requested, then use "track" and provide a list of matching songs for the 
             "media_id" parameter.
             
 
@@ -298,7 +298,7 @@ blueprint:
             should be "the best Queen songs"
 
 
-            The "target_data" key is used to the information on which the request should 
+            The "target_data" key is used to define the information on which the request should 
             be played.
             
             {% if expose_areas %}These are the area names which have a Music Assantant 
@@ -308,14 +308,14 @@ blueprint:
             
             {% if expose_areas %}In case the query requests the music to be played in 
             one more areas in which a Music Assitant player is located, use {"areas": 
-            ["area name"]} for "target_data" Always use a list with area names, also 
+            ["area name"]} for "target_data". Always use a list with area names, even 
             when there is only one. When no area is mentioned in the voice 
             request, use {"areas":[]}}{% endif %}{% if expose_players %}Use {"areas":[]}}
             {% endif %}
             
-            {% if expose_players %}In case the query request the music to be played on 
+            {% if expose_players %}In case the query requests the music to be played on 
             one or more music assistant players, use {"players": ["player name"]} for 
-            "target_data" Always use a list with the player names, also when there is 
+            "target_data". Always use a list with the player names, even when there is 
             only one. When no player is mentioned in the voice request, use {"players":[]}
             {% endif %}{% if expose_areas %}Use {"players":[]}}{% endif %}
             
