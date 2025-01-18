@@ -295,7 +295,7 @@ blueprint:
 
             The setting provided for radio mode is "{{ play_continuously }}"
 
-            When this setting is set to "Alway" use "radio_mode": True unless the
+            When this setting is set to "Always" use "radio_mode": True unless the
             "item_type" is "radio". In that case do not provide this parameter.
 
             In case this setting is set to "Never" use "radio_mode": False
