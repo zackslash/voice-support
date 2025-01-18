@@ -1,4 +1,4 @@
-blueprint:
+zeblueprint:
   name: LLM Script for Music Assitant voice requests
   source_url: https://github.com/music-assistant/voice-support/blob/main/llm-script-blueprint/llm_voice_script.yaml
   description:
@@ -356,12 +356,12 @@ sequence:
         {{ ns.players }}"
       target_data:
         area_id: "{{ area | default('NA', true) }}"
-        entity_id: "{{ 'NA' if area | default and not player_data | default else (player_data or default_player) | default('NA', true) }}"
+        entity_id: "{{ 'NA' if area | default and not player_data else (player_data or default_player) | default('NA', true) }}"
       invalid_target:
         response: Unable to find valid target
   - if:
       - condition: template
-        value_template: "{{ not (area | default or player_data | default or default_player) }}"
+        value_template: "{{ not (area | default or player_data or default_player) }}"
     then:
       - stop: No valid target for Music Assistant Voice script found
         response_variable: invalid_target
