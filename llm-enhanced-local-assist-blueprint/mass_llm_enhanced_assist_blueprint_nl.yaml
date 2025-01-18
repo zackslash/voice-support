@@ -263,40 +263,40 @@ blueprint:
 
             The setting provided for radio mode is "{{ play_continuously }}"
             
-            When this setting is set to "Altijd" use "radio_mode": True unless the 
+            When this setting is set to "Alway" use "radio_mode": True unless the 
             "item_type" is "radio". In that case do not provide this parameter.
             
-            In case this setting is set to "Nooit" use "radio_mode": False
+            In case this setting is set to "Never" use "radio_mode": False
             
-            In case this setting is set to "Gebruik mediaspeler instelling" do not 
-            provide the parameter.
+            In case this setting is set to "User player setting" do not provide the 
+            parameter.
             
 
             There can be several types of answers for the "action_data" dictionary. 
             Here are some examples:
             
-            Just an artist with the radio mode setting set to "Altijd" >> {"media_id": 
+            Just an artist with the radio mode setting set to "Always" >> {"media_id": 
               "artist name", "media_type":"artist", "radio_mode": True}.
             
             An album by an artist with the radio mode setting set no "Never" >> 
             {"media_id": "album name", "media_type":"album", "artist": "artist name", 
             "radio_mode": False}.
             
-            A track by an artist with radio mode setting set to "Gebruik mediaspeler instelling" >> 
+            A track by an artist with radio mode setting set to "Use player setting" >> 
             {"media_id":"track name", "media_type":"track", "artist": "artist name"}.
             
-            Just a track if the artist is not known with radio mode set to "Altijd" >> 
+            Just a track if the artist is not known with radio mode set to "Always" >> 
             {"media_id":"track name", "media_type":"track", "radio_mode": True}.
             
             Just a playlist if the request is a specific playlist >> {"media_id":"playlist 
             name", "media_type":"playlist"}.
             
-            Multiple tracks of different artists with radio mode set to "Altijd" >> 
+            Multiple tracks of different artists with radio mode set to "Always" >> 
             {"media_id": ["Artist name - Song name", "Another artist name - Another song 
             name", "Another artist name - Another song name"], "media_type":"track", 
             "radio_mode": True}
             
-            Multiple tracks of the same artist with radio mode set to "Nooit" >> 
+            Multiple tracks of the same artist with radio mode set to "Never" >> 
             {"media_id": ["Song name", "Another song name"], "artist": "artist name", 
             "media_type":"track", "radio_mode": False}
 
