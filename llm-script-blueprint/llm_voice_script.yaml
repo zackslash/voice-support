@@ -353,7 +353,7 @@ sequence:
         {{ ns.players }}"
       target_data:
         area_id: "{{ area | default('NA', true) }}"
-        entity_id: "{{ (player_data or default_player) | default('NA', true) }}"
+        entity_id: "{{ 'NA' if area | default else (player_data or default_player) | default('NA', true) }}"
       invalid_target:
         response: Unable to find valid target
   - if:
