@@ -358,7 +358,7 @@ sequence:
         response: Unable to find valid target
   - if:
       - condition: template
-        value_template: "{{ not (area | default or player_data or default_player) }}"
+        value_template: "{{ not (area | default or player_data | default or default_player) }}"
     then:
       - stop: No valid target for Music Assistant Voice script found
         response_variable: invalid_target
