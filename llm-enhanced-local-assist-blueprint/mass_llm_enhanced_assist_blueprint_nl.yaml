@@ -104,7 +104,7 @@ blueprint:
               multiple: false
               custom_value: false
               sort: false
-          default: Altijd
+          default: Gebruik mediaspeler instelling
     response_settings:
       name: Response settings for Assist
       icon: mdi:chat
