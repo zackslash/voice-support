@@ -232,7 +232,8 @@ blueprint:
               multiple: false
           default:
             'The area or areas for which the music is requested. In case no
-            area is provided, use the area the request comes from.
+            the request does not mention a target (either an area or a player), 
+            use the area the request comes from.
 
             In case the area can not be determined from the request, or the device
             the request comes from, no not use this parameter
