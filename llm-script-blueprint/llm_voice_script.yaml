@@ -1,4 +1,4 @@
-zeblueprint:
+blueprint:
   name: LLM Script for Music Assitant voice requests
   source_url: https://github.com/music-assistant/voice-support/blob/main/llm-script-blueprint/llm_voice_script.yaml
   description:
