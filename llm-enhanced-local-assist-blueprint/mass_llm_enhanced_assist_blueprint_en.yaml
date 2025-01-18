@@ -79,28 +79,28 @@ blueprint:
               multiple: false
           default:
         play_continuously:
-          name: Play Continuously
-          description: 'Determines if the "radio_mode" setting should be set for the
-            play media action.
+          name: Radio Mode
+          description: >
+            Determines if the "radio_mode" setting should be set for the play media action.
 
+            When set to "Use player settings" it will use the "Don't stop the music" setting
+            on the Music Assistant Player
+            
             When set to "Always" it the player will continuously all new songs to
             the playlist.
 
             When set to "Never" the player will stop playing after the songs selected
             by the LLM are finished.
-
-            When set to "Use player settings" it will use the settings as set on the
-            Music Assistant Player'
           selector:
             select:
               options:
+              - Use player settings
               - Always
               - Never
-              - Use player settings
               multiple: false
               custom_value: false
               sort: false
-          default: Always
+          default: Use player settings
     response_settings:
       name: Response settings for Assist
       icon: mdi:chat
