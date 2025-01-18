@@ -74,6 +74,8 @@ The blueprint is located in the `llm-enhanced-local-assist-blueprint` folder of 
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fmusic-assistant%2Fvoice-support%2Fblob%2Fmain%2Fllm-enhanced-local-assist-blueprint%2Fmass_llm_enhanced_assist_blueprint_en.yaml)
 
+When importing the blueprint you can optionally change the trigger sentences and responses. This allows you to add extra sentence triggers, but it also allows you to translate the sentence triggers and responses to your own language.
+
 ### Configuration
 
 1. An LLM integration needs to be set up. This can be an already existing integration. This automation is intended to be used with an LLM Conversation Agent which doesn't allow home control (No control selected instead of Assist). Usage with an LLM which has control over your entities can result in errors, like targeting a media player which isn't a Music Assistant player. If you want to use an existing LLM with home control enabled, [Option 3](#option-3-script-which-can-be-used-as-a-tool-by-an-llm-integration-like-open-ai-conversation-chatgpt-or-google-generative-ai-gemini) is the preferred option.
