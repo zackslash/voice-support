@@ -419,7 +419,7 @@ actions:
       device_area: "{{ area_id(trigger.device_id) }}"
       default_player: !input default_player
       backup_target:
-        "{{ dict(area_id=device_area) if device_area else dict(entity_id=default_player)
+        "{{ dict(area_id=[device_area]) if device_area else dict(entity_id=[default_player])
         }}"
       target_data: "{{ llm_target_data if llm_target else backup_target }}"
       target: "{{ dict(target_data.items() | selectattr('1')) }}"
@@ -451,7 +451,8 @@ actions:
         {% else %}
         no_target
         {% endif %}
-      area_list: "{{ target.get('area_id', []) | map('area_name') | list }}"
+      only_device_area: "{{ target.get('area_id', []) == [device_area] }}"
+      area_list: "{{ [] if only_device_area else target.get('area_id', []) | map('area_name') | list }}"
       area_info:
         "{{ area_list[:-1] | join(', ') ~ ' ' ~ combine ~ ' ' ~ area_list[-1] if area_list
         | count > 2 else area_list | join(' ' ~ combine ~ ' ') }}"
