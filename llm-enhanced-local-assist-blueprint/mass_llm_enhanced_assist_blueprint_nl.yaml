@@ -407,7 +407,7 @@ actions:
         {% else %}
         no_target
         {% endif %}
-       only_device_area: "{{ target.get('area_id', []) == [device_area] }}"
+      only_device_area: "{{ target.get('area_id', []) == [device_area] }}"
       area_list: "{{ [] if only_device_area else target.get('area_id', []) | map('area_name') | list }}"
       player_list: "{{ target.get('entity_id') | map('state_attr', 'friendly_name') | 
         list }}"
