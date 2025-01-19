@@ -376,8 +376,8 @@ actions:
       llm_target: "{{ iif(llm_target_data.entity_id or llm_target_data.area_id) }}"
       device_area: "{{ area_id(trigger.device_id) }}"
       default_player: !input default_player
-      backup_target: "{{ dict(area_id=device_area) if device_area else 
-        dict(entity_id=default_player) }}"
+      backup_target: "{{ dict(area_id=[device_area]) if device_area else 
+        dict(entity_id=[default_player]) }}"
       target_data: "{{ llm_target_data if llm_target else backup_target }}"
       target: "{{ dict(target_data.items() | selectattr('1')) }}"
   - alias: Only try to play music when target was determined
@@ -407,9 +407,8 @@ actions:
         {% else %}
         no_target
         {% endif %}
-      area_list: "{{ target.get('area_id', []) | map('area_name') | list }}"
-      area_info: "{{ area_list[:-1] | join(', ') ~ ' en ' ~ area_list[-1] if area_list 
-        | count > 2 else area_list | join(' en ') }}"
+       only_device_area: "{{ target.get('area_id', []) == [device_area] }}"
+      area_list: "{{ [] if only_device_area else target.get('area_id', []) | map('area_name') | list }}"
       player_list: "{{ target.get('entity_id') | map('state_attr', 'friendly_name') | 
         list }}"
       player_info: "{{ player_list[:-1] | join(', ') ~ ' en ' ~ player_list[-1] if 
