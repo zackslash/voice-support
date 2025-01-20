@@ -29,11 +29,8 @@ The Blueprint is located in the `local-assist-blueprint` folder of this reposito
 All sentences must:
 
 - start with the words `Play` or `Listen to` followed by the item type `artist/track/album/playlist/radio station` and then the name of the item
-
 - for album and track be optionally followed by `by (the) artist` and then the artist name
-
 - then be optionally followed by an area name or device name
-
 - then, for artist, track, album or playlist, be optionally followed by the phrase `using radio mode`
 
 #### Acceptable variations
@@ -44,27 +41,16 @@ There are acceptable variations to some words and inclusion of the word `the` is
 *see the translated blueprints for translated examples*
 
 ```
-
 Play the artist Pink Floyd in the kitchen
-
 Listen to album Jagged Little Pill in the study
-
 Listen to the album Greatest Hits by the artist James Taylor in the kitchen
-
 Play track New Years Day in the bedroom
-
 Play track New Years Day in the bedroom using radio mode
-
 Play the song A Hard Days Night by Billy Joel in the bedroom
-
 Listen to the playlist Classic Rock in the study
-
 Listen to the radio station BBC Radio 1 in the bedroom
-
 Play the album Classical Nights on the Bedroom Sonos Speaker
-
 Listen to the record Classical Nights on the Bedroom Sonos Speaker
-
 Play the band U2
 ```
 
@@ -74,7 +60,6 @@ The blueprint is located in the `llm-enhanced-local-assist-blueprint` folder of 
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fmusic-assistant%2Fvoice-support%2Fblob%2Fmain%2Fllm-enhanced-local-assist-blueprint%2Fmass_llm_enhanced_assist_blueprint_en.yaml)
 
-When importing the blueprint you can optionally change the trigger sentences and responses. This allows you to add extra sentence triggers, but it also allows you to translate the sentence triggers and responses to your own language.
 
 ### Configuration
 
@@ -83,14 +68,60 @@ When importing the blueprint you can optionally change the trigger sentences and
 3. Create the automation using the blueprint. Choose the LLM agent from step 1. Optionally you can change settings for Music Assistant playback such as a default player, and whether to use Play Continously. You can also adjust the way voice responses are created as well as tweak the LLM Prompt as needed for your particular model. See the setting descriptions for more information.
 4. Save the automation.
 
+
+### Blueprint setup
+
+#### Required 
+
+* Select an LLM conversation agent to be used with the automation. The blueprint is 
+intended to be used with an LLM conversation agent without control of the house.
+
+#### Optional
+
+* Set a `Default Player` to be used when no target is mentioned in the request and
+the request doesn't come from an area with a Music Assistant player.
+* Change the setting for `Radio Mode`. By default this is set to use the `Don't stop 
+the music` setting on the Music Assistant player.
+* Change the trigger sentence or add more, you can also use this to translate 
+the sentence to your own language.
+* Change the responses or translate them to your own language.
+* Change the setting to expose area names and player names to the LLM, the default 
+setting is to send them. In case you change the settings in the blueprint and 
+do not expose the area names and player names to the LLM, the name must exactly 
+match the name of the area or player in Home Assistant. So when the area name is 
+_Bedroom Sophia_ it does not work if you you say _Sophia's Bedroom_ or when the 
+Speech to Text conversion uses _Sofia_ instead of _Sophia_. Unfortunately aliases 
+can't be used in the automation, as there is no template to get the aliases of areas 
+or entities. Capitalization of words does't matter, so _bedroom sophia_ will still 
+match if the area name in Home Assitant is _Bedroom Sophia_
+* Change the prompt which is used to have the LLM provide the correct data. 
+You don't need to translate this if you use a different language.
+
+
 ### Usage
+
 All sentences must:
 
-- start with the words Play or Listen to followed by a query about what you want to play
-- then be optionally followed by one or more area namea and/or one or more device names to play the music on
+* start with the words `Play` or `Listen to` followed by a query about what you
+want to play
+* then be optionally followed by one or more area namea and/or one or more device
+names to play the music on.
 
-### Examples
-*see the translated blueprints for translated examples*
+### How the target for the media is determined:
+
+1. In case one or more areas and/or one or more Music Assistant players are mentioned 
+in the request, these areas and/or players are used.
+In case you don't expose the names, and the area or player mentioned doesn't match exactly 
+with the area or player name in Home Assistatn, Assist will use the `No target response`.
+2. If no target was mentioned in the request, the automation will first check if the 
+request came from a device in an area. If in there is also a Music Assistant player 
+in that same area, the music will be played there.
+3.  If no target was mentioned in the request and the voice satellite area could also 
+not be used, then the `Default Player` set in the blueprint will be used. In case no 
+`Default Player` is set, the `No target response` will be returned.
+
+
+#### Examples
 
 ```
 Play the best songs from Pink Floyd in the kitchen
