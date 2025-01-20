@@ -104,7 +104,7 @@ All sentences must:
 
 * start with the words `Play` or `Listen to` followed by a query about what you
 want to play
-* then be optionally followed by one or more area namea and/or one or more device
+* then be optionally followed by one or more area names and/or one or more device
 names to play the music on.
 
 ### How the target for the media is determined:
@@ -112,9 +112,9 @@ names to play the music on.
 1. In case one or more areas and/or one or more Music Assistant players are mentioned 
 in the request, these areas and/or players are used.
 In case you don't expose the names, and the area or player mentioned doesn't match exactly 
-with the area or player name in Home Assistatn, Assist will use the `No target response`.
+with the area or player name in Home Assistant, Assist will use the `No target response`.
 2. If no target was mentioned in the request, the automation will first check if the 
-request came from a device in an area. If in there is also a Music Assistant player 
+request came from a device in an area. If there is also a Music Assistant player 
 in that same area, the music will be played there.
 3.  If no target was mentioned in the request and the voice satellite area could also 
 not be used, then the `Default Player` set in the blueprint will be used. In case no 
