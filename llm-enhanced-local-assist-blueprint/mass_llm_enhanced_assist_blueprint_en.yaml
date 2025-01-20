@@ -49,7 +49,7 @@ blueprint:
     * start with the words `Play` or `Listen to` followed by a query about what you
     want to play
 
-    * then be optionally followed by one or more area namea and/or one or more device
+    * then be optionally followed by one or more area names and/or one or more device
     names to play the music on.
 
     ### How the target for the media is determined:
@@ -57,10 +57,10 @@ blueprint:
     1. In case one or more areas and/or one or more Music Assistant players are mentioned 
     in the request, these areas and/or players are used.
     In case you don't expose the names, and the area or player mentioned doesn't match exactly 
-    with the area or player name in Home Assistatn, Assist will use the `No target response`.
+    with the area or player name in Home Assistant, Assist will use the `No target response`.
 
     2. If no target was mentioned in the request, the automation will first check if the 
-    request came from a device in an area. If in there is also a Music Assistant player 
+    request came from a device in an area. If there is also a Music Assistant player 
     in that same area, the music will be played there.
 
     3.  If no target was mentioned in the request and the voice satellite area could also 
@@ -255,7 +255,7 @@ blueprint:
           description:
             Disable to not expose the names of areas in which there is
             a Music Assistant player to the LLM. In case this is disabled any 
-            plaer name used in the request has to exactly match the player name in 
+            player name used in the request has to exactly match the player name in 
             Home Assistant
           selector:
             boolean: {}
@@ -393,13 +393,13 @@ blueprint:
             should be played.
 
             {% if expose_areas %}These are the area names which have a Music Assantant
-            player: {{ area_names }}. Only use these area names for the "target_data. In
+            player: {{ area_names }}. Only use these area names for the "target_data". In
             case another are description is used in the request, try to map it to one of
             these area names."
             {% endif %}
 
             In case the query requests the music to be played in one or more areas
-            {% if expose_areas %}in which a Music Assitant player is located{% endif %},
+            {% if expose_areas %}in which a Music Assistant player is located{% endif %},
             use {"areas": ["area name"]} for "target_data". Always use a list with area
             names, even when there is only one. {% if expose_areas %}Try to match the
             areas mentioned in the request to the provided area names. Only use area names
