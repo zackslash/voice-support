@@ -158,7 +158,7 @@ actions:
       area_or_player_name: "{{ trigger.slots.area_or_player_name | default }}"
       assist_device_id: "{{ trigger.device_id }}"
       action_data:
-        media_name: "{{ trigger.slots.media_name }}"
+        media_id: "{{ trigger.slots.media_name }}"
         media_type: |
           {% if 'radio' in media_name or 'Radio' in media_name %}
             radio
