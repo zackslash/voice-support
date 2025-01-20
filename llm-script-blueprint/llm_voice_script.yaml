@@ -94,29 +94,28 @@ blueprint:
               multiple: false
           default:
         play_continuously:
-          name: Play Continuously
-          description:
-            'Determines if the "radio_mode" setting should be set for the
-            play media action.
+          name: Radio Mode
+          description: >
+            Determines if the "radio_mode" setting should be set for the play media action.
 
-            When set to "Always" it the player will continuously all new songs to
+            When set to "Use player settings" it will use the "Don't stop the music" setting
+            on the Music Assistant Player
+            
+            When set to "Always" the player will continuously add new songs to
             the playlist.
 
             When set to "Never" the player will stop playing after the songs selected
             by the LLM are finished.
-
-            When set to "Use player settings" it will use the settings as set on the
-            Music Assistant Player'
           selector:
             select:
               options:
-                - Always
-                - Never
-                - Use player settings
+              - Use player settings
+              - Always
+              - Never
               multiple: false
               custom_value: false
               sort: false
-          default: Always
+          default: Use player settings
     prompt_settings:
       name: Prompt settings for the LLM
       icon: mdi:robot
@@ -231,13 +230,15 @@ blueprint:
               multiline: true
               multiple: false
           default:
-            'The area or areas for which the music is requested. In case no
-            area is provided, use the area the request comes from.
+            'The area or areas for which the music is requested. In case the request 
+            does not mention a target (either an area or a player), use the area 
+            the request comes from.
 
             In case the area can not be determined from the request, or the device
-            the request comes from, no not use this parameter
+            the request comes from, do not use this parameter.
 
-            Use the "area" parameter or the "media_player" parameter. Do not use both.'
+            Only use both the "area" parameter and the "media_player" parameter together 
+            in case both are specifically used in the request.'
         media_player_prompt:
           name: Media Player Prompt
           description: The prompt which will be used to the LLM can provice the media_id
@@ -250,7 +251,8 @@ blueprint:
             multiple media players to play the music on. This has to be the entity_id
             of a media player provided by the Music Assistant integration.
 
-            Use the "area" parameter or the "media_player" parameter. Do not use both.'
+             Only use both the "area" parameter and the "media_player" parameter together 
+            in case both are specifically used in the request.'
     addition_conditions_actions:
       name: Additional actions
       icon: mdi:wrench
@@ -353,7 +355,7 @@ sequence:
         {{ ns.players }}"
       target_data:
         area_id: "{{ area | default('NA', true) }}"
-        entity_id: "{{ (player_data or default_player) | default('NA', true) }}"
+        entity_id: "{{ 'NA' if area | default and not player_data else (player_data or default_player) | default('NA', true) }}"
       invalid_target:
         response: Unable to find valid target
   - if:

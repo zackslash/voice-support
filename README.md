@@ -66,6 +66,7 @@ The blueprint is located in the `llm-enhanced-local-assist-blueprint` folder of 
 |---|---|
 |Dutch|[Information](/llm-enhanced-local-assist-blueprint/mass_llm_enchanced_assis_bluerpint_nl.md)|
 
+
 ### Configuration
 
 1. An LLM integration needs to be set up. This can be an already existing integration. This automation is intended to be used with an LLM Conversation Agent which doesn't allow home control (No control selected instead of Assist). Usage with an LLM which has control over your entities can result in errors, like targeting a media player which isn't a Music Assistant player. If you want to use an existing LLM with home control enabled, [Option 3](#option-3-script-which-can-be-used-as-a-tool-by-an-llm-integration-like-open-ai-conversation-chatgpt-or-google-generative-ai-gemini) is the preferred option.
