@@ -184,9 +184,9 @@ blueprint:
           default:
             - (play|listen to) {query}
         combine_text:
-          name: Conversation trigger sentences
+          name: Combine word
           description:
-            This text will be used in the response in case muliple areas
+            This word will be used in the response in case muliple areas
             or players are targeted. So if you request media to be played in the living
             room and in the kitchen, the response will mention 'living room <and>
             kitchen'. <and> will be replaced with the value from this parameter.
