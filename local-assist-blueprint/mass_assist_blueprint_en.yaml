@@ -192,7 +192,7 @@ actions:
         ignorecase=true) | map('area_entities') | sum(start=[]) | select('in', 
         integration_entities('music_assistant')) | list }}
       player_entity_id_by_assist_area: >
-        {{ area_entities('woonkamer')
+        {{ area_entities(area_id(trigger.device_id))
         | select('in', integration_entities('music_assistant')) | list }}
       mass_player_entity_id: |
         {{ player_entity_id_by_player_name or player_entity_id_by_area_name 
