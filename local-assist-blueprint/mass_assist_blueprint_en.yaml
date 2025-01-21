@@ -149,7 +149,6 @@ triggers:
   - trigger: conversation
     command: !input playlist_trigger
     id: playlist
-conditions: []
 actions:
   - alias: Define variables to be used in the automation
     variables:
@@ -159,36 +158,24 @@ actions:
       assist_device_id: "{{ trigger.device_id }}"
       action_data:
         media_id: "{{ trigger.slots.media_name }}"
-        media_type: |
-          {% if 'radio' in media_name or 'Radio' in media_name %}
-            radio
-          {% else %}
-            {{ trigger_id }}
-          {% endif %}
+        media_type: "{{ 'radio' if 'radio' in media_name | lower else trigger_id }}"
         artist: "{{ trigger.slots.artist | default }}"
-        radio_mode: "{{ 'radio' in trigger.slots.radio_mode | default() | lower }}"
+        radio_mode: "{{ 'radio' in trigger.slots.radio_mode | default | lower }}"
       player_entity_id_by_player_name: >
-        {{ expand(integration_entities('music_assistant')) |
-        selectattr("attributes.mass_player_type", 'defined') |
-        selectattr("attributes.friendly_name", 'equalto', area_or_player_name) |
-        join(', ', attribute="entity_id") }}
+        {{ integration_entities('music_assistant') | expand 
+          | selectattr('name', 'match', area_or_player_name ~ '$', ignorecase=true)
+          | map(attribute='entity_id') | list }}
       player_entity_id_by_area_name: >
-        {{ expand(area_entities(area_or_player_name)) |
-        selectattr("attributes.mass_player_type", 'defined') |
-        selectattr("attributes.friendly_name", 'equalto', area_or_player_name) |
-        join(', ', attribute="entity_id") }}
-      player_entity_id_by_assist_area: |
-        {% if assist_device_id and area_id(assist_device_id)  %}
-          {{ expand(area_entities(area_id(assist_device_id)))
-            | selectattr("attributes.mass_player_type", 'defined')
-            | join(', ', attribute="entity_id") }}
-        {% else %}
-          None
-        {% endif %}
+          {{ areas() | map('area_name') | select('match', area_or_player_name ~ '$', 
+          ignorecase=true) | map('area_entities') | sum(start=[]) | select('in', 
+          integration_entities('music_assistant')) | list }}
+      player_entity_id_by_assist_area: >
+        {{ area_entities('woonkamer')
+        | select('in', integration_entities('music_assistant')) | list }}
       mass_player_entity_id: |
         {{ player_entity_id_by_player_name or player_entity_id_by_area_name 
-        or player_entity_id_by_assist_area or default_player_entity_id }}
-      mass_player_name: "{{ state_attr(mass_player_entity_id, 'friendly_name') }}"
+        or player_entity_id_by_assist_area or [default_player_entity_id] }}
+      mass_player_name: "{{ mass_player_entity_id | map('state_attr', 'friendly_name') | join(', ') }}"
   - alias: Send media to selected Music Assistant Player
     action: music_assistant.play_media
     data: "{{ dict(action_data.items() | selectattr('1')) }}"
