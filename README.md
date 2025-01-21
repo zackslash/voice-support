@@ -23,22 +23,48 @@ The Blueprint is located in the `local-assist-blueprint` folder of this reposito
 |English|[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fmusic-assistant%2Fvoice-support%2Fblob%2Fmain%2Flocal-assist-blueprint%2Fmass_assist_blueprint_en.yaml)|
 |German|[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fmusic-assistant%2Fvoice-support%2Fblob%2Fmain%2Flocal-assist-blueprint%2Fmass_assist_blueprint_de.yaml)|
 
+
+In case your language is not listed above, you provide tranlsations yourself in the blueprint settings.
+
+
+### Blueprint setup
+
+#### Required 
+
+* Set a `Default Player` to be used when no target is mentioned in the request and
+the request doesn't come from an area with a Music Assistant player.
+
+#### Optional
+
+* Change the trigger sentence or add more, you can also use this to translate 
+the sentence to your own language.
+
+* Change the responses or translate them to your own language.
+
+
 ### Usage
 *see the translated blueprints for translated usage*
 
 All sentences must:
 
-- start with the words `Play` or `Listen to` followed by the item type `artist/track/album/playlist/radio station` and then the name of the item
-- for album and track be optionally followed by `by (the) artist` and then the artist name
-- then be optionally followed by an area name or device name
-- then, for artist, track, album or playlist, be optionally followed by the phrase `using radio mode`
+* start with the words `Play` or `Listen to` followed by the item type `artist`/`track`/`album`/`playlist`/`radio` and then the name of the item
+* for album and track be optionally followed by `by [the] artist` and then the artist name
+* then be optionally followed by an area name or device name
+* then, for artist, track, album or playlist, be optionally followed by the phrase `using radio mode`
 
-#### Acceptable variations
+#### Accepted variations
 
-There are acceptable variations to some words and inclusion of the word `the` is optional.
+usage of the article `the` is optional
+
+|Media type|Accepted variations|
+|---|---|
+|`artist`|`band`, `group`|
+|`track`|`song`|
+|`radio`|`radio station`, `radio`|
+|`playlist`||
+
 
 #### Examples
-*see the translated blueprints for translated examples*
 
 ```
 Play the artist Pink Floyd in the kitchen
