@@ -456,13 +456,14 @@ actions:
       llm_target_data:
         entity_id:
           "{{ integration_entities('music_assistant') | expand | selectattr('name',
-          'in', player_names.split(', ') | select('search', llm_result.target_data.players
-          | join('|'), ignorecase=true) | list) | map(attribute='entity_id') | list
+          'in', player_names.split(', ') | select('search', 
+          llm_result.get('target_data', {}).get('players', []) | join('|'), 
+          ignorecase=true) | list) | map(attribute='entity_id') | list
           if llm_result.target_data.players else [] }}"
         area_id:
           "{{ area_names.split(', ') | select('search', llm_result.target_data.areas
-          | join('|'), ignorecase=true) | map('area_id') | list if llm_result.target_data.areas
-          else [] }}"
+          | join('|'), ignorecase=true) | map('area_id') | list if 
+          llm_result.get('target_data', {}).get('areas', []) else [] }}"
       llm_target:
         "{{ iif(llm_result.target_data.players or llm_result.target_data.areas)
         }}"
