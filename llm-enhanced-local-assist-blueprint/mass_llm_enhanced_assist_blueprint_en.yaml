@@ -464,8 +464,8 @@ actions:
           | join('|'), ignorecase=true) | map('area_id') | list if 
           llm_result.get('target_data', {}).get('areas') else [] }}"
       llm_target:
-        "{{ iif(llm_result.target_data.players or llm_result.target_data.areas)
-        }}"
+        "{{ iif(llm_result.get('target_data', {}).get('players') or 
+        llm_result.get('target_data', {}).get('areas')) }}"
       device_area:
         "{{ area_id(trigger.device_id) if area_name(trigger.device_id) in
         area_names.split(', ') }}"
