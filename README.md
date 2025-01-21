@@ -28,17 +28,24 @@ The Blueprint is located in the `local-assist-blueprint` folder of this reposito
 
 All sentences must:
 
-- start with the words `Play` or `Listen to` followed by the item type `artist/track/album/playlist/radio station` and then the name of the item
-- for album and track be optionally followed by `by (the) artist` and then the artist name
-- then be optionally followed by an area name or device name
-- then, for artist, track, album or playlist, be optionally followed by the phrase `using radio mode`
+* start with the words `Play` or `Listen to` followed by the item type `artist`/`track`/`album`/`playlist`/`radio` and then the name of the item
+* for album and track be optionally followed by `by [the] artist` and then the artist name
+* then be optionally followed by an area name or device name
+* then, for artist, track, album or playlist, be optionally followed by the phrase `using radio mode`
 
-#### Acceptable variations
+#### Accepted variations
 
-There are acceptable variations to some words and inclusion of the word `the` is optional.
+usage of the article `the` is optional
+
+|Media type|Accepted variations|
+|---|---|
+|`artist`|`band`, `group`|
+|`track`|`song`|
+|`radio`|`radio station`, `radio`|
+|`playlist`||
+
 
 #### Examples
-*see the translated blueprints for translated examples*
 
 ```
 Play the artist Pink Floyd in the kitchen
