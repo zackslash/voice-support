@@ -2,7 +2,7 @@ blueprint:
   domain: automation
   name: Music Assistant - Local(only) Voice Support Blueprint
   source_url: https://github.com/music-assistant/voice-support/blob/main/local-assist-blueprint/mass_assist_blueprint_en.yaml
-  description: '
+  description: "
     ![Image](https://github.com/music-assistant/voice-support/blob/main/assets/music-assistant.png?raw=true)
 
     # Play media using voice commands
@@ -11,17 +11,30 @@ blueprint:
 
     All sentences must:
 
-    * start with the words `Play` or `Listen to` followed by the item type `artist/track/album/playlist/radio station` and then the name of the item
+    * start with the words `Play` or `Listen to` followed by the item type `artist`/`track`/`album`/`playlist`/`radio` and then the name of the item
 
-    * for album and track be optionally followed by `by (the) artist` and then the artist name
+    * for album and track be optionally followed by `by [the] artist` and then the artist name
 
     * then be optionally followed by an area name or device name
 
     * then, for artist, track, album or playlist, be optionally followed by the phrase `using radio mode`
 
-    #### Acceptable variations
+    #### Accepted variations
 
-    There are acceptable variations to some words and inclusion of the word `the` is optional.
+    usage of the article `the` is optional
+
+    |Media type|Accepted variations|
+
+    |---|---|
+
+    |`artist`|`band`, `group`|
+
+    |`track`|`song`|
+
+    |`radio`|`radio station`, `radio`|
+
+    |`playlist`||
+
 
     #### Examples
 
@@ -49,7 +62,7 @@ blueprint:
 
     Play the band U2
 
-    ```'
+    ```"
   input:
     default_player_entity_id_input:
       name: Default Media Player
@@ -62,21 +75,20 @@ blueprint:
       name: Trigger and response settings for Assist
       icon: mdi:chat
       description:
-        "You can change the existing triggers or add more triggers in these settings. 
-        Put text between square brackets [ ] to make it optional. With round brackets 
-        ( ) and a pipe character | you can enter multiple values which are treated as 
+        "You can change the existing triggers or add more triggers in these settings.
+        Put text between square brackets [ ] to make it optional. With round brackets
+        ( ) and a pipe character | you can enter multiple values which are treated as
         'or'. { query } is a wildcard value which will contain the requested media and
         optionally the area or Music Assistant player.
-        
+
         You can als set the responses Assist will give. It uses jinja templates which
-        will be replaced with the media information and player name of the Music Assistant 
+        will be replaced with the media information and player name of the Music Assistant
         player."
       collapsed: true
       input:
         album_trigger:
           name: Album trigger
-          description:
-            The trigger sentences to request a specific album.
+          description: The trigger sentences to request a specific album.
           selector:
             text:
               multiline: false
@@ -85,8 +97,7 @@ blueprint:
             - "(play|listen to) [the ](album|ep|record|compilation|single) {media_name} [by [the ](artist|band|group) {artist}] [(in|on|using) [the ]{area_or_player_name}][ (with|using) {radio_mode}]"
         track_trigger:
           name: Track trigger
-          description:
-            The trigger sentences to request a specific track.
+          description: The trigger sentences to request a specific track.
           selector:
             text:
               multiline: false
@@ -95,8 +106,7 @@ blueprint:
             - "(play|listen to) [the ](track|song) {media_name} [by [the ](artist|band|group) {artist}] [(in|on|using) [the ]{area_or_player_name}][ (with|using) {radio_mode}]"
         artist_trigger:
           name: Artist trigger
-          description:
-            The trigger sentences to request music from a specific artist.
+          description: The trigger sentences to request music from a specific artist.
           selector:
             text:
               multiline: false
@@ -105,8 +115,7 @@ blueprint:
             - "(play|listen to) [the ](artist|band|group) {media_name} [(in|on|using) [the ]{area_or_player_name}][ (with|using) {radio_mode}]"
         radio_trigger:
           name: Radio trigger
-          description:
-            The trigger sentences to request a specific radio station.
+          description: The trigger sentences to request a specific radio station.
           selector:
             text:
               multiline: false
@@ -115,8 +124,7 @@ blueprint:
             - "(play|listen to) [the ]((radio station)|(radio)|(station)) {media_name} [(in|on|using) [the ]{area_or_player_name}]"
         playlist_trigger:
           name: Playlist trigger
-          description:
-            The trigger sentences to request a specific playlist.
+          description: The trigger sentences to request a specific playlist.
           selector:
             text:
               multiline: false
@@ -125,8 +133,7 @@ blueprint:
             - "(play|listen to) [the ]playlist {media_name} [(in|on|using) [the ]{area_or_player_name}][ (with|using) {radio_mode}]"
         response_input:
           name: Response for Assist
-          description:
-            The response which will be given by Assist.
+          description: The response which will be given by Assist.
           selector:
             text:
               multiline: false
@@ -166,9 +173,9 @@ actions:
           | selectattr('name', 'match', area_or_player_name ~ '$', ignorecase=true)
           | map(attribute='entity_id') | list }}
       player_entity_id_by_area_name: >
-          {{ areas() | map('area_name') | select('match', area_or_player_name ~ '$', 
-          ignorecase=true) | map('area_entities') | sum(start=[]) | select('in', 
-          integration_entities('music_assistant')) | list }}
+        {{ areas() | map('area_name') | select('match', area_or_player_name ~ '$', 
+        ignorecase=true) | map('area_entities') | sum(start=[]) | select('in', 
+        integration_entities('music_assistant')) | list }}
       player_entity_id_by_assist_area: >
         {{ area_entities('woonkamer')
         | select('in', integration_entities('music_assistant')) | list }}
