@@ -379,7 +379,7 @@ blueprint:
 
             {% if expose_areas %}These are the area names which have a Music Assantant
             player: {{ area_names }}. Only use these area names for the "target_data".
-            In case another are description is used in the request, try to map it
+            In case another area description is used in the request, try to map it
             to one of these area names." {% endif %}
 
             In case the query requests the music to be played in one or more areas
