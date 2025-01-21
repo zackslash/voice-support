@@ -10,36 +10,36 @@ blueprint:
 
     ### Blueprint setup
 
-    #### Required 
+    #### Required
 
-    * Select an LLM conversation agent to be used with the automation. The blueprint is 
-    intended to be used with an LLM conversation agent without control of the house.
-    
+    * Select an LLM conversation agent to be used with the automation. The blueprint
+    is intended to be used with an LLM conversation agent without control of the house.
+
     #### Optional
 
-    * Set a `Default Player` to be used when no target is mentioned in the request and
-    the request doesn't come from an area with a Music Assistant player.
+    * Set a `Default Player` to be used when no target is mentioned in the request
+    and the request doesn't come from an area with a Music Assistant player.
 
-    * Change the setting for `Radio Mode`. By default this is set to use the `Don't stop 
-    the music` setting on the Music Assistant player.
+    * Change the setting for `Radio Mode`. By default this is set to use the `Don't
+    stop the music` setting on the Music Assistant player.
 
-    * Change the trigger sentence or add more, you can also use this to translate 
+    * Change the trigger sentence or add more, you can also use this to translate
     the sentence to your own language.
 
     * Change the responses or translate them to your own language.
 
-    * Change the setting to expose area names and player names to the LLM, the default 
-    setting is to send them. In case you change the settings in the blueprint and 
-    do not expose the area names and player names to the LLM, the name must exactly 
-    match the name of the area or player in Home Assistant. So when the area name is 
-    _Bedroom Sophia_ it does not work if you you say _Sophia's Bedroom_ or when the 
-    Speech to Text conversion uses _Sofia_ instead of _Sophia_. Unfortunately aliases 
-    can't be used in the automation, as there is no template to get the aliases of areas 
-    or entities. Capitalization of words does't matter, so _bedroom sophia_ will still 
-    match if the area name in Home Assitant is _Bedroom Sophia_
+    * Change the setting to expose area names and player names to the LLM, the default
+    setting is to send them. In case you change the settings in the blueprint and
+    do not expose the area names and player names to the LLM, the name must exactly
+    match the name of the area or player in Home Assistant. So when the area name
+    is _Bedroom Sophia_ it does not work if you you say _Sophia's Bedroom_ or when
+    the Speech to Text conversion uses _Sofia_ instead of _Sophia_. Unfortunately
+    aliases can't be used in the automation, as there is no template to get the aliases
+    of areas or entities. Capitalization of words does't matter, so _bedroom sophia_
+    will still match if the area name in Home Assitant is _Bedroom Sophia_
 
-    * Change the prompt which is used to have the LLM provide the correct data. 
-    You don't need to translate this if you use a different language.
+    * Change the prompt which is used to have the LLM provide the correct data. You
+    don't need to translate this if you use a different language.
 
 
     ### Usage
@@ -54,18 +54,18 @@ blueprint:
 
     ### How the target for the media is determined:
 
-    1. In case one or more areas and/or one or more Music Assistant players are mentioned 
-    in the request, these areas and/or players are used.
-    In case you don't expose the names, and the area or player mentioned doesn't match exactly 
-    with the area or player name in Home Assistant, Assist will use the `No target response`.
+    1. In case one or more areas and/or one or more Music Assistant players are mentioned
+    in the request, these areas and/or players are used. In case you don't expose
+    the names, and the area or player mentioned doesn't match exactly with the area
+    or player name in Home Assistant, Assist will use the `No target response`.
 
-    2. If no target was mentioned in the request, the automation will first check if the 
-    request came from a device in an area. If there is also a Music Assistant player 
-    in that same area, the music will be played there.
+    2. If no target was mentioned in the request, the automation will first check
+    if the request came from a device in an area. If there is also a Music Assistant
+    player in that same area, the music will be played there.
 
-    3.  If no target was mentioned in the request and the voice satellite area could also 
-    not be used, then the `Default Player` set in the blueprint will be used. In case no 
-    `Default Player` is set, the `No target response` will be returned.
+    3.  If no target was mentioned in the request and the voice satellite area could
+    also not be used, then the `Default Player` set in the blueprint will be used.
+    In case no `Default Player` is set, the `No target response` will be returned.
 
 
     #### Examples
@@ -98,7 +98,7 @@ blueprint:
 
     ```"
   homeassistant:
-    min_version: 2024.6.0
+    min_version: 2024.10.0
   input:
     llm_agent:
       name: LLM converation agent
@@ -135,17 +135,17 @@ blueprint:
         play_continuously:
           name: Radio Mode
           description:
-            Determines if the "radio_mode" setting should be set for the
+            'Determines if the "radio_mode" setting should be set for the
             play media action.
 
-            When set to "Use player settings" it will use the "Don't stop the music"
+            When set to "Use player settings" it will use the "Don''t stop the music"
             setting on the Music Assistant Player
 
             When set to "Always" the player will continuously add new songs to the
             playlist.
 
             When set to "Never" the player will stop playing after the songs selected
-            by the LLM are finished.
+            by the LLM are finished.'
           selector:
             select:
               options:
@@ -245,7 +245,7 @@ blueprint:
           name: Expose Music Assistant Players
           description:
             Disable to not expose the names of the Music Assistant players
-            to the LLM. In case this is disabled any area name used in the request 
+            to the LLM. In case this is disabled any area name used in the request
             has to exactly match the area name in Home Assistant
           selector:
             boolean: {}
@@ -254,9 +254,9 @@ blueprint:
           name: Expose areas with Music Assistant Players
           description:
             Disable to not expose the names of areas in which there is
-            a Music Assistant player to the LLM. In case this is disabled any 
-            player name used in the request has to exactly match the player name in 
-            Home Assistant
+            a Music Assistant player to the LLM. In case this is disabled any player
+            name used in the request has to exactly match the player name in Home
+            Assistant
           selector:
             boolean: {}
           default: true
@@ -336,50 +336,35 @@ blueprint:
             restrict the search.
 
             For example, if the input is "Hells Bells by ACDC", then the output should
-            be {"media_id":"Hells Bells",  "media_type":"track", "artist":"AC/DC"}
+            be {"media_id":"Hells Bells", "media_type":"track", "artist":"AC/DC"}
 
             "artist" and "album" are optional and never used in the case of a playlist
             search.
 
 
-            The setting provided for radio mode is "{{ play_continuously }}"
-
-            When this setting is set to "Always" use "radio_mode": True unless the
-            "item_type" is "radio". In that case do not provide this parameter.
-
-            In case this setting is set to "Never" use "radio_mode": False
-
-            In case this setting is set to "User player setting" do not provide the
-            parameter.
-
-
             There can be several types of answers for the "action_data" dictionary.
             Here are some examples:
 
-            Just an artist with the radio mode setting set to "Always" >> {"media_id":
-            "artist name", "media_type":"artist", "radio_mode": True}.
+            Just an artist >> {"media_id": "artist name", "media_type":"artist"}.
 
-            An album by an artist with the radio mode setting set no "Never" >> {"media_id":
-            "album name", "media_type":"album", "artist": "artist name", "radio_mode":
-            False}.
+            An album by an artist >> {"media_id": "album name", "media_type": "album",
+            "artist": "artist name"}.
 
-            A track by an artist with radio mode setting set to "Use player setting"
-            >> {"media_id":"track name", "media_type":"track", "artist": "artist name"}.
+            A track by an artist >> {"media_id": "track name", "media_type": "track",
+            "artist": "artist name"}.
 
-            Just a track if the artist is not known with radio mode set to "Always"
-            >> {"media_id":"track name", "media_type":"track", "radio_mode": True}.
+            Just a track if the artist is not known >> {"media_id": "track name",
+            "media_type": "track"}.
 
             Just a playlist if the request is a specific playlist >> {"media_id":"playlist
             name", "media_type":"playlist"}.
 
-            Multiple tracks of different artists with radio mode set to "Always" >>
-            {"media_id": ["Artist name - Song name", "Another artist name - Another
-            song name", "Another artist name - Another song name"], "media_type":"track",
-            "radio_mode": True}
+            Multiple tracks of different artists >> {"media_id": ["Artist name - Song name",
+            "Another artist name - Another song name", "Another artist name - Another
+            song name"], "media_type":"track"}.
 
-            Multiple tracks of the same artist with radio mode set to "Never" >> {"media_id":
-            ["Song name", "Another song name"], "artist": "artist name", "media_type":"track",
-            "radio_mode": False}
+            Multiple tracks of the same artist >> {"media_id": ["Song name", "Another
+            song name"], "artist": "artist name", "media_type":"track"}
 
 
             The "media_description" key is used to describe the media which will be
@@ -393,38 +378,38 @@ blueprint:
             should be played.
 
             {% if expose_areas %}These are the area names which have a Music Assantant
-            player: {{ area_names }}. Only use these area names for the "target_data". In
-            case another are description is used in the request, try to map it to one of
-            these area names."
-            {% endif %}
+            player: {{ area_names }}. Only use these area names for the "target_data".
+            In case another are description is used in the request, try to map it
+            to one of these area names." {% endif %}
 
             In case the query requests the music to be played in one or more areas
-            {% if expose_areas %}in which a Music Assistant player is located{% endif %},
-            use {"areas": ["area name"]} for "target_data". Always use a list with area
-            names, even when there is only one. {% if expose_areas %}Try to match the
-            areas mentioned in the request to the provided area names. Only use area names
-            from the list provided. {% else %}Do not include articles like "the" at the start
-            of the area name. So if the request is "Play music from Queen in the kitchen" use
-            "kitchen" as area name. Besides removing the first article, use exactly what
-            was provided in the request.{% endif %}When no area is mentioned in the voice
-            request{% if expose_areas %} or no area could be matched{% endif %}, use
-            {"areas":[]}
+            {% if expose_areas %}in which a Music Assistant player is located{% endif
+            %}, use {"areas": ["area name"]} for "target_data". Always use a list
+            with area names, even when there is only one. {% if expose_areas %}Try
+            to match the areas mentioned in the request to the provided area names.
+            Only use area names from the list provided. {% else %}Do not include articles
+            like "the" at the start of the area name. So if the request is "Play music
+            from Queen in the kitchen" use "kitchen" as area name. Besides removing
+            the first article, use exactly what was provided in the request.{% endif
+            %}When no area is mentioned in the voice request{% if expose_areas %}
+            or no area could be matched{% endif %}, use {"areas":[]}
 
             {% if expose_players %}These are the Music Assistant players in the system:
-            {{ player_names }}. Only use these names for the "target_data". In case another
-            player name is mentioned in the request, try to map it to one of these player
-            names.{% endif %}
+            {{ player_names }}. Only use these names for the "target_data". In case
+            another player name is mentioned in the request, try to map it to one
+            of these player names.{% endif %}
 
-            In case the query requests the music to be played on one or more media players,
-            use {"players": ["player name"]} for "target_data". Always use a list with player
-            names, even when there is only one. {% if expose_players %}Try to match the
-            players mentioned in the request to the provided player names. Only use player names
-            from the list provided. {% else %}Do not include articles like "the" at the start
-            of the player name. So if the request is "Play music from Queen on the bedroom
-            Sonos" use "bedroom Sonos" as area name. Besides removing the first article, use
-            exactly what was provided in the request.{% endif %}When no player is mentioned
-            in the voice  request{% if expose_players %} or no player could be matched
-            {% endif %}, use {"players":[]}
+            In case the query requests the music to be played on one or more media
+            players, use {"players": ["player name"]} for "target_data". Always use
+            a list with player names, even when there is only one. {% if expose_players
+            %}Try to match the players mentioned in the request to the provided player
+            names. Only use player names from the list provided. {% else %}Do not
+            include articles like "the" at the start of the player name. So if the
+            request is "Play music from Queen on the bedroom Sonos" use "bedroom Sonos"
+            as area name. Besides removing the first article, use exactly what was
+            provided in the request.{% endif %}When no player is mentioned in the
+            voice  request{% if expose_players %} or no player could be matched {%
+            endif %}, use {"players":[]}
 
 
             Note that the input query can be in a different language. For the "media_type"
@@ -460,27 +445,37 @@ actions:
   - alias: Store relevant part of LLM result in variable and define target
     variables:
       llm_result: "{{ result.response.speech.plain.speech | from_json }}"
-  - alias: Store relevant part of LLM result in variable and define target
-    variables:
+      llm_action_data:
+        media_id: "{{ llm_result.action_data.media_id }}"
+        media_type: "{{ llm_result.action_data.media_type }}"
+        artist: "{{ llm_result.action_data.artist | default('NA', true) }}"
+        album: "{{ llm_result.action_data.album | default('NA', true) }}"
+        radio_mode:
+          "{{ false if play_continuously == 'Never' else play_continuously
+          == 'Always' and llm_result.action_data.media_type != 'radio' or 'NA' }}"
       llm_target_data:
-        entity_id: "{{ integration_entities('music_assistant') | expand 
-          | selectattr('name', 'in', player_names.split(', ') 
-          | select('search', llm_result.target_data.players | join('|'), ignorecase=true) 
-          | list) | map(attribute='entity_id') | list if llm_result.target_data.players 
-          else [] }}"
+        entity_id:
+          "{{ integration_entities('music_assistant') | expand | selectattr('name',
+          'in', player_names.split(', ') | select('search', llm_result.target_data.players
+          | join('|'), ignorecase=true) | list) | map(attribute='entity_id') | list
+          if llm_result.target_data.players else [] }}"
         area_id:
-          "{{ area_names.split(', ') | select('search', llm_result.target_data.areas 
-          | join('|'), ignorecase=true) | map('area_id') 
-          | list if llm_result.target_data.areas else [] }}"
-      llm_target: "{{ iif(llm_result.target_data.players or llm_result.target_data.areas) 
+          "{{ area_names.split(', ') | select('search', llm_result.target_data.areas
+          | join('|'), ignorecase=true) | map('area_id') | list if llm_result.target_data.areas
+          else [] }}"
+      llm_target:
+        "{{ iif(llm_result.target_data.players or llm_result.target_data.areas)
         }}"
-      device_area: 
-        "{{ area_id(trigger.device_id) if area_name(trigger.device_id) in area_names.split(', ') }}"
+      device_area:
+        "{{ area_id(trigger.device_id) if area_name(trigger.device_id) in
+        area_names.split(', ') }}"
       default_player: !input default_player
       backup_target:
         "{{ (dict(area_id=[device_area]) if device_area) or (dict(entity_id=[default_player])
         if default_player) }}"
-      target_data: "{{ (llm_target_data if llm_target else backup_target) | default({}, true) }}"
+      target_data:
+        "{{ (llm_target_data if llm_target else backup_target) | default({},
+        true) }}"
       target: "{{ dict(target_data.items() | selectattr('1')) }}"
   - alias: Only try to play music when target was determined
     if:
@@ -490,7 +485,7 @@ actions:
     then:
       - alias: Play Music based on LLM result
         action: music_assistant.play_media
-        data: "{{ llm_result.action_data }}"
+        data: "{{ dict(llm_action_data.items() | rejectattr('1', 'eq', 'NA')) }}"
         target: "{{ target }}"
   - alias: Set variables for responses
     variables:
