@@ -514,7 +514,7 @@ actions:
         "{{ player_list[:-1] | join(', ') ~ ' ' ~ combine ~ ' ' ~ player_list[-1]
         if player_list | count > 2 else player_list | join(' ' ~ combine ~ ' ')
         }}"
-      media_info: "{{ llm_result.media_description | default(llm_action_data.item_id, true) }}"
+      media_info: "{{ llm_result.media_description | default(llm_action_data.media_id, true) }}"
   - alias: Set response for Assist
     set_conversation_response:
       "{{ responses[response] | replace('<media_info>', media_info)
