@@ -352,7 +352,7 @@ blueprint:
               multiline: true
               multiple: false
           default:
-            'If case it is needed, the fields "artist" and "album" can be used to further
+            'In case it is needed, the fields "artist" and "album" can be used to further
             restrict the search.
 
             For example, if the input is "Hells Bells by ACDC", then the output should
@@ -409,7 +409,7 @@ blueprint:
         llm_prompt_target:
           name: Target data LLM prompt
           description:
-            Explanation the the "target_data" part of the output
+            Explanation of the "target_data" part of the output
           selector:
             text:
               multiline: true
