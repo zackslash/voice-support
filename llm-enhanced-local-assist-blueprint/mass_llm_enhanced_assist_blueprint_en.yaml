@@ -260,11 +260,10 @@ blueprint:
           selector:
             boolean: {}
           default: true
-        llm_prompt:
-          name: LLM query prompt
+        llm_prompt_intro:
+          name: Introduction for LLM prompt
           description:
-            The prompt which will be used to the LLM can provide the correct
-            data for the Music Assistant play media action
+            Introduction for the LLM to understand the goal of the conversation
           selector:
             text:
               multiline: true
@@ -281,10 +280,17 @@ blueprint:
             Here is the structured JSON that I expect in response {"action_data":
             {"media_id":"name", "media_type":"type", "artist":"name", "album":"name"},
             "media_description": "description of media", "target_data", {"areas":
-            ["area name"], "players": ["player name"]}}
-
-
-            The argument "media_type" is mandatory and must always be provided no
+            ["area name"], "players": ["player name"]}}'
+        llm_prompt_media_type:
+          name: Media type LLM prompt
+          description:
+            Explanation about the "media_type" parameter in the output
+          selector:
+            text:
+              multiline: true
+              multiple: false
+          default:
+            'The argument "media_type" is mandatory and must always be provided no
             matter what!
 
             "media_type" can only be one of 5 different values:
@@ -302,10 +308,17 @@ blueprint:
             media_type is mandatory and must always be provided. In case a request
             does not match any of these types, for example when music from a specific
             genre is requested, then use "track" and provide a list of matching songs
-            for the "media_id" parameter.
-
-
-            The argument "media_id" is also mandatory and must always be provided
+            for the "media_id" parameter.'
+        llm_prompt_media_id:
+          name: Media ID LLM prompt
+          description:
+            Explanation about the "media_id" paramter in the output
+          selector:
+            text:
+              multiline: true
+              multiple: false
+          default:
+            'The argument "media_id" is also mandatory and must always be provided
             no matter what!
 
             media_id is the most specific from track, album, and artist.
@@ -329,20 +342,34 @@ blueprint:
 
             - If the search is a radio channel: Then media_id is the requested channel.
 
-            "media_id" is a mandatory argument and must always be provided.
-
-
-            If case it is needed, the fields "artist" and "album" can be used to further
+            "media_id" is a mandatory argument and must always be provided.'
+        llm_prompt_artist_album:
+          name: Artist and album LLM prompt
+          description:
+            Explanation about the "album" and "artist" parameters in the output
+          selector:
+            text:
+              multiline: true
+              multiple: false
+          default:
+            'If case it is needed, the fields "artist" and "album" can be used to further
             restrict the search.
 
             For example, if the input is "Hells Bells by ACDC", then the output should
             be {"media_id":"Hells Bells", "media_type":"track", "artist":"AC/DC"}
 
             "artist" and "album" are optional and never used in the case of a playlist
-            search.
-
-
-            There can be several types of answers for the "action_data" dictionary.
+            search.'
+        llm_prompt_examples:
+          name: Examples action data LLM prompt
+          description:
+            Examples for the "action_data" of the output
+          selector:
+            text:
+              multiline: true
+              multiple: false
+          default:
+            'There can be several types of answers for the "action_data" dictionary.
             Here are some examples:
 
             Just an artist >> {"media_id": "artist name", "media_type":"artist"}.
@@ -364,17 +391,31 @@ blueprint:
             song name"], "media_type":"track"}.
 
             Multiple tracks of the same artist >> {"media_id": ["Song name", "Another
-            song name"], "artist": "artist name", "media_type":"track"}
-
-
-            The "media_description" key is used to describe the media which will be
+            song name"], "artist": "artist name", "media_type":"track"}'
+        llm_prompt_media_description:
+          name: Media description LLM prompt
+          description:
+            Explanation on the "media_description" part of the output
+          selector:
+            text:
+              multiline: true
+              multiple: false
+          default:
+            'The "media_description" key is used to describe the media which will be
             played. This can be taken from the voice command query, but it should
             be only the part which is relevant for the media. So if the voice request
             is "Play the best Queen songs on the living room player" the value for
-            "media_description" should be "the best Queen songs"
-
-
-            The "target_data" key is used to define the information on which the request
+            "media_description" should be "the best Queen songs"'
+        llm_prompt_target:
+          name: Target data LLM prompt
+          description:
+            Explanation the the "target_data" part of the output
+          selector:
+            text:
+              multiline: true
+              multiple: false
+          default:
+            'The "target_data" key is used to define the information on which the request
             should be played.
 
             {% if expose_areas %}These are the area names which have a Music Assantant
@@ -409,10 +450,17 @@ blueprint:
             as area name. Besides removing the first article, use exactly what was
             provided in the request.{% endif %}When no player is mentioned in the
             voice  request{% if expose_players %} or no player could be matched {%
-            endif %}, use {"players":[]}
-
-
-            Note that the input query can be in a different language. For the "media_type"
+            endif %}, use {"players":[]}'
+        llm_prompt_outro:
+          name: Outro for LLM prompt
+          description:
+            Some final notes with additional explanation for the LLM
+          selector:
+            text:
+              multiline: true
+              multiple: false
+          default:
+            'Note that the input query can be in a different language. For the "media_type"
             the untranslated English terms should be used, in case of a playlist search
             use the language used in the input.
 
@@ -420,6 +468,19 @@ blueprint:
             IMPORTANT: You must reply with only the JSON model, nothing before nor
             after because your response will be processed by a search component of
             a media player service. So also no code tags. Only the JSON!'
+        llm_prompt:
+          name: Legacy LLM prompt setting
+          description:
+            This field contains the LLM prompt set before the prompt settings were split into
+            multiple parts. By default it will be empty, it will only contain text in case 
+            you were using the automation before this LLM prompt settins were split. If this 
+            setting contains the prompt, you can use it to copy back changes to the relevant
+            part above, as this prompt setting will not be used in the automation
+          selector:
+            text:
+              multiline: true
+              multiple: false
+          default: '' 
 triggers:
   - alias: Trigger to request for music
     trigger: conversation
@@ -429,7 +490,15 @@ actions:
     variables:
       expose_areas: !input expose_areas
       expose_players: !input expose_players
-      play_continuously: !input play_continuously
+      prompt:
+        intro: !input llm_prompt_intro
+        media_type: !input llm_prompt_media_type
+        media_id: !input llm_prompt_media_id
+        artist_album: !input llm_prompt_artist_album
+        examples: !input llm_prompt_examples
+        description: !input llm_prompt_media_description
+        target: !input llm_prompt_target
+        outro: !input llm_prompt_outro
       area_names:
         "{{ integration_entities('music_assistant')  | map('area_name')
         | join(', ') }}"
@@ -439,12 +508,13 @@ actions:
   - alias: Send the request to the LLM
     action: conversation.process
     data:
-      text: !input llm_prompt
+      text: "{{ prompt.values() | join('\n\n') }}"
       agent_id: !input llm_agent
     response_variable: result
   - alias: Store relevant part of LLM result in variable and define target
     variables:
       llm_result: "{{ result.response.speech.plain.speech | from_json }}"
+      play_continuously: !input play_continuously
       llm_action_data:
         media_id: "{{ llm_result.action_data.media_id }}"
         media_type: "{{ llm_result.action_data.media_type }}"
@@ -514,7 +584,7 @@ actions:
         "{{ player_list[:-1] | join(', ') ~ ' ' ~ combine ~ ' ' ~ player_list[-1]
         if player_list | count > 2 else player_list | join(' ' ~ combine ~ ' ')
         }}"
-      media_info: "{{ llm_result.media_description }}"
+      media_info: "{{ llm_result.media_description | default(llm_action_data.media_id, true) }}"
   - alias: Set response for Assist
     set_conversation_response:
       "{{ responses[response] | replace('<media_info>', media_info)
