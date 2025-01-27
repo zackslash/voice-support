@@ -271,7 +271,13 @@ blueprint:
           default:
             'You are an AI process that transforms a music search query into
             a structured JSON.
-
+            For every query, you must research and provide specific details—such as
+            titles, artist names, or album names—if they are not directly mentioned in
+            the query. For example, if the query is "play the latest album by Foo
+            Fighters," you should research the latest album title and include it in
+            the JSON response. If the query specifies only an artist, album, or
+            playlist, provide details as appropriate without assuming unspecified
+            specifics.
 
             This is the voice command query provided by the user: "{{ trigger.sentence
             }}"
