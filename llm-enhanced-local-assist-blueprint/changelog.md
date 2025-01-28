@@ -1,0 +1,7 @@
+![Image](https://github.com/music-assistant/voice-support/blob/main/assets/music-assistant.png?raw=true)
+
+# Changelog: Option 2 - LLM Enhanced automation
+
+## 20250128
+
+* Initial version when the changelog was created

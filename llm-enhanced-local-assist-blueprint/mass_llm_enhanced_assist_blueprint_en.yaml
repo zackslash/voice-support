@@ -494,6 +494,7 @@ triggers:
 actions:
   - alias: Store input from blueprint in variables so they can be used in the prompt
     variables:
+      version: 20250128
       expose_areas: !input expose_areas
       expose_players: !input expose_players
       prompt:

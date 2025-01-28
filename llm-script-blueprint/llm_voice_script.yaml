@@ -330,6 +330,7 @@ fields:
     description: !input media_player_prompt
 sequence:
   - variables:
+      version: 20250128
       default_player: !input default_player
       player_data: "{% set ma = integration_entities('music_assistant') %} 
         
