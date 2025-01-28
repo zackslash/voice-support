@@ -85,108 +85,35 @@ triggers:
 conditions: []
 actions:
   - variables:
+      version: 20250128
       default_player_entity_id: !input default_player_entity_id_input
       trigger_id: "{{ trigger.id }}"
-      media_name: "{{ trigger.slots.media_name }}"
-      media_type: |
-        {% if 'radio' in media_name or 'Radio' in media_name %}
-          radio
-        {% else %}
-          {{ trigger_id }}
-        {% endif %}
-      artist: "{{ trigger.slots.artist }}"
-      area_or_player_name: "{{ trigger.slots.area_or_player_name }}"
+      area_or_player_name: "{{ trigger.slots.area_or_player_name | default }}"
       assist_device_id: "{{ trigger.device_id }}"
-      radio_mode_str: "{{ trigger.slots.radio_mode or '' }}"
-      radio_mode: "{{ 'radio' in radio_mode_str.lower() }}"
+      action_data:
+        media_id: "{{ trigger.slots.media_name }}"
+        media_type: "{{ 'radio' if 'radio' in media_name | lower else trigger_id }}"
+        artist: "{{ trigger.slots.artist | default }}"
+        radio_mode: "{{ 'radio' in trigger.slots.radio_mode | default | lower }}"
       player_entity_id_by_player_name: >
-        {{ expand(integration_entities('music_assistant')) |
-        selectattr("attributes.mass_player_type", 'defined') |
-        selectattr("attributes.friendly_name", 'equalto', area_or_player_name) |
-        join(', ', attribute="entity_id") }}
+        {{ integration_entities('music_assistant') | expand 
+          | selectattr('name', 'match', area_or_player_name ~ '$', ignorecase=true)
+          | map(attribute='entity_id') | list }}
       player_entity_id_by_area_name: >
-        {{ expand(area_entities(area_or_player_name)) |
-        selectattr("attributes.mass_player_type", 'defined') |
-        selectattr("attributes.friendly_name", 'equalto', area_or_player_name) |
-        join(', ', attribute="entity_id") }}
-      player_entity_id_by_assist_area: |
-        {% if assist_device_id and area_id(assist_device_id)  %}
-          {{ expand(area_entities(area_id(assist_device_id))) | selectattr("attributes.mass_player_type", 'defined')  | join(', ', attribute="entity_id") }}
-        {% else %}
-          None
-        {% endif %}
+        {{ areas() | map('area_name') | select('match', area_or_player_name ~ '$', 
+        ignorecase=true) | map('area_entities') | sum(start=[]) | select('in', 
+        integration_entities('music_assistant')) | list }}
+      player_entity_id_by_assist_area: >
+        {{ area_entities(area_id(trigger.device_id))
+        | select('in', integration_entities('music_assistant')) | list }}
       mass_player_entity_id: |
-        {% if player_entity_id_by_player_name %}
-          {{ player_entity_id_by_player_name }}
-        {% elif player_entity_id_by_area_name %}
-          {{ player_entity_id_by_area_name }}
-        {% elif player_entity_id_by_assist_area  %}
-          {{ player_entity_id_by_assist_area }}
-        {% else %}
-          {{ default_player_entity_id }}
-        {% endif %}
-      mass_player_name: "{{ state_attr(mass_player_entity_id, 'friendly_name') }}"
-  - choose:
-      - conditions:
-          - condition: template
-            value_template: "{{ media_type == 'album' }}"
-        sequence:
-          - action: music_assistant.play_media
-            metadata: {}
-            data:
-              media_id: "{{ media_name }}"
-              artist: "{{ artist }}"
-              media_type: "{{ media_type }}"
-              radio_mode: "{{ radio_mode }}"
-            target:
-              entity_id: "{{ mass_player_entity_id }}"
-      - conditions:
-          - condition: template
-            value_template: "{{ media_type == 'track' }}"
-        sequence:
-          - action: music_assistant.play_media
-            metadata: {}
-            data:
-              media_id: "{{ media_name }}"
-              artist: "{{ artist }}"
-              media_type: "{{ media_type }}"
-              radio_mode: "{{ radio_mode }}"
-            target:
-              entity_id: "{{ mass_player_entity_id }}"
-      - conditions:
-          - condition: template
-            value_template: "{{ media_type == 'artist' }}"
-        sequence:
-          - action: music_assistant.play_media
-            metadata: {}
-            data:
-              media_id: "{{ media_name }}"
-              media_type: "{{ media_type }}"
-              radio_mode: "{{ radio_mode }}"
-            target:
-              entity_id: "{{ mass_player_entity_id }}"
-      - conditions:
-          - condition: template
-            value_template: "{{ media_type == 'radio' }}"
-        sequence:
-          - action: music_assistant.play_media
-            metadata: {}
-            data:
-              media_id: "{{ media_name }}"
-              media_type: "{{ media_type }}"
-            target:
-              entity_id: "{{ mass_player_entity_id }}"
-      - conditions:
-          - condition: template
-            value_template: "{{ media_type == 'playlist' }}"
-        sequence:
-          - action: music_assistant.play_media
-            metadata: {}
-            data:
-              media_id: "{{ media_name }}"
-              media_type: "{{ media_type }}"
-              radio_mode: "{{ radio_mode }}"
-            target:
-              entity_id: "{{ mass_player_entity_id }}"
+        {{ player_entity_id_by_player_name or player_entity_id_by_area_name 
+        or player_entity_id_by_assist_area or [default_player_entity_id] }}
+      mass_player_name: "{{ mass_player_entity_id | map('state_attr', 'friendly_name') | join(', ') }}"
+  - alias: Send media to selected Music Assistant Player
+    action: music_assistant.play_media
+    data: "{{ dict(action_data.items() | selectattr('1')) }}"
+    target:
+      entity_id: "{{ mass_player_entity_id }}"
   - set_conversation_response: "{{ trigger.slots.media_name }} wordt afgespeeld op {{ mass_player_name }}"
 mode: single
