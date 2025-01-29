@@ -1,0 +1,206 @@
+blueprint:
+  domain: automation
+  name: Music Assistant - Suporte de Voz Local (Exclusivo)
+  source_url: https://github.com/music-assistant/voice-support/blob/main/local-assist-blueprint/mass_assist_blueprint_pt-br.yaml
+  description: "
+    ![Imagem](https://github.com/music-assistant/voice-support/blob/main/assets/music-assistant.png?raw=true)
+
+    # Reproduzir mídia usando comandos de voz
+
+    ### Configuração do Blueprint
+
+    #### Obrigatório
+
+    * Defina um `Player Padrão` para ser usado quando nenhum dispositivo for mencionado no comando
+    e o pedido não vier de uma área com um player do Music Assistant.
+
+    #### Opcional
+
+    * Altere as frases de acionamento ou adicione mais comandos. Você pode usar isso para traduzir
+    os comandos para o português.
+
+    * Altere as respostas ou traduza-as para o português.
+
+
+    ### Uso
+
+    Todos os comandos devem:
+
+    * Começar com as palavras `Tocar` ou `Ouvir` seguidas do tipo de conteúdo `artista`/`música`/`álbum`/`playlist`/`rádio` e depois o nome do item
+
+    * Para álbuns e músicas, opcionalmente incluir `do artista` seguido do nome do artista
+
+    * Opcionalmente especificar uma área ou dispositivo no final do comando
+
+    * Para artistas, músicas, álbuns ou playlists, opcionalmente incluir `usando modo rádio`
+
+    #### Variações Aceitas
+
+    O artigo `o`/`a` é opcional
+
+    |Tipo de Mídia|Variações Aceitas|
+
+    |---|---|
+
+    |`artista`|`banda`, `grupo`|
+
+    |`música`|`faixa`|
+
+    |`rádio`|`estação de rádio`, `rádio`|
+    
+    |`playlist`||
+    
+
+    #### Exemplos
+
+    ```
+
+    Tocar o artista Caetano Veloso na cozinha
+
+    Ouvir o álbum Elis & Tom no escritório
+
+    Ouvir o álbum Grandes Sucessos do artista Djavan na cozinha
+
+    Tocar a música Águas de Março no quarto
+
+    Tocar a música Águas de Março no quarto usando modo rádio
+
+    Tocar a música Como Nossos Pais do Milton Nascimento no quarto
+
+    Ouvir a playlist MPB Clássica no escritório
+
+    Ouvir a estação de rádio Rádio JBFM no quarto
+
+    Tocar o álbum Noites Brasileiras no Sonos do Quarto
+
+    Ouvir o disco Noites Brasileiras no Sonos do Quarto
+
+    Tocar a banda Os Mutantes
+
+    ```"
+  input:
+    default_player_entity_id_input:
+      name: Player de Mídia Padrão
+      selector:
+        entity:
+          filter:
+            integration: music_assistant
+            domain: media_player
+    trigger_response_settings:
+      name: Configurações de Acionamento e Resposta
+      icon: mdi:chat
+      description: |
+        Altere os comandos existentes ou adicione novos comandos nestas configurações.
+        Use colchetes [ ] para partes opcionais. Parênteses ( ) com | permitem valores alternativos.
+        { query } é um curinga que captura a mídia solicitada e opcionalmente o local/dispositivo.
+
+        Defina também as respostas do Assistente usando templates jinja que serão
+        substituídos pelas informações da mídia e nome do player.
+      collapsed: true
+      input:
+        album_trigger:
+          name: Comando para Álbum
+          description: Frases para solicitar um álbum específico
+          selector:
+            text:
+              multiline: false
+              multiple: true
+          default:
+            - "(tocar|ouvir) [o ](álbum|ep|disco|coletânea|single) {media_name} [do [o ](artista|banda|grupo) {artist}] [(na|no|usando) [o ]{area_or_player_name}][ (com|usando) {radio_mode}]"
+        track_trigger:
+          name: Comando para Música
+          description: Frases para solicitar uma música específica
+          selector:
+            text:
+              multiline: false
+              multiple: true
+          default:
+            - "(tocar|ouvir) [a ](música|faixa) {media_name} [(do|da) [(o|a) ](artista|banda|grupo) {artist}] [(na|no|usando) [o ]{area_or_player_name}][ (com|usando) {radio_mode}]"
+        artist_trigger:
+          name: Comando para Artista
+          description: Frases para solicitar um artista específico
+          selector:
+            text:
+              multiline: false
+              multiple: true
+          default:
+            - "(tocar|ouvir) [(o|a) ](artista|banda|grupo) {media_name} [(na|no|usando) [o ]{area_or_player_name}][ (com|usando) {radio_mode}]"
+        radio_trigger:
+          name: Comando para Rádio
+          description: Frases para solicitar uma estação de rádio
+          selector:
+            text:
+              multiline: false
+              multiple: true
+          default:
+            - "(tocar|ouvir) [a ]((estação de rádio)|(rádio)|(estação)) {media_name} [(na|no|usando) [o ]{area_or_player_name}]"
+        playlist_trigger:
+          name: Comando para Playlist
+          description: Frases para solicitar uma playlist
+          selector:
+            text:
+              multiline: false
+              multiple: true
+          default:
+            - "(tocar|ouvir) [a ]playlist {media_name} [(na|no|usando) [o ]{area_or_player_name}][ (com|usando) {radio_mode}]"
+        response_input:
+          name: Resposta do Assistente
+          description: Resposta que será dada pelo Assistente
+          selector:
+            text:
+              multiline: false
+              multiple: false
+          default: "{{ trigger.slots.media_name }} tocando em {{ mass_player_name }}"
+
+triggers:
+  - trigger: conversation
+    command: !input album_trigger
+    id: album
+  - trigger: conversation
+    command: !input track_trigger
+    id: track
+  - trigger: conversation
+    command: !input artist_trigger
+    id: artist
+  - trigger: conversation
+    command: !input radio_trigger
+    id: radio
+  - trigger: conversation
+    command: !input playlist_trigger
+    id: playlist
+actions:
+  - alias: Definir variáveis para uso na automação
+    variables:
+      version: 20250128
+      default_player_entity_id: !input default_player_entity_id_input
+      trigger_id: "{{ trigger.id }}"
+      area_or_player_name: "{{ trigger.slots.area_or_player_name | default }}"
+      assist_device_id: "{{ trigger.device_id }}"
+      action_data:
+        media_id: "{{ trigger.slots.media_name }}"
+        media_type: "{{ 'radio' if 'radio' in media_name | lower else trigger_id }}"
+        artist: "{{ trigger.slots.artist | default }}"
+        radio_mode: "{{ 'radio' in trigger.slots.radio_mode | default | lower }}"
+      player_entity_id_by_player_name: >
+        {{ integration_entities('music_assistant') | expand 
+          | selectattr('name', 'match', area_or_player_name ~ '$', ignorecase=true)
+          | map(attribute='entity_id') | list }}
+      player_entity_id_by_area_name: >
+        {{ areas() | map('area_name') | select('match', area_or_player_name ~ '$', 
+        ignorecase=true) | map('area_entities') | sum(start=[]) | select('in', 
+        integration_entities('music_assistant')) | list }}
+      player_entity_id_by_assist_area: >
+        {{ area_entities(area_id(trigger.device_id))
+        | select('in', integration_entities('music_assistant')) | list }}
+      mass_player_entity_id: |
+        {{ player_entity_id_by_player_name or player_entity_id_by_area_name 
+        or player_entity_id_by_assist_area or [default_player_entity_id] }}
+      mass_player_name: "{{ mass_player_entity_id | map('state_attr', 'friendly_name') | join(', ') }}"
+  - alias: Enviar mídia para o player selecionado
+    action: music_assistant.play_media
+    data: "{{ dict(action_data.items() | selectattr('1')) }}"
+    target:
+      entity_id: "{{ mass_player_entity_id }}"
+  - alias: Retornar resposta
+    set_conversation_response: !input response_input
+mode: single
