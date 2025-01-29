@@ -1,5 +1,5 @@
 blueprint:
-  name: LLM Script for Music Assitant voice requests
+  name: LLM Script for Music Assistant voice requests
   source_url: https://github.com/music-assistant/voice-support/blob/main/llm-script-blueprint/llm_voice_script.yaml
   description:
     '![Image](https://github.com/music-assistant/voice-support/blob/main/assets/music-assistant.png?raw=true)
@@ -55,7 +55,7 @@ blueprint:
     The variable will undefined in case there was no area information, in case it
     is defined it will be a list of area_ids|
 
-    |`media_player`|The Music Assitant media player(s) determined by the LLM on which
+    |`media_player`|The Music Assistant media player(s) determined by the LLM on which
     the request will be played. The variable will be undefined in case there was no
     media player provided in the request, in case it it defined it should be a list
     entity_ids, but it could be the LLM provided names instead.
