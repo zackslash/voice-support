@@ -125,7 +125,7 @@ _Bedroom Sophia_ it does not work if you you say _Sophia's Bedroom_ or when the
 Speech to Text conversion uses _Sofia_ instead of _Sophia_. Unfortunately aliases 
 can't be used in the automation, as there is no template to get the aliases of areas 
 or entities. Capitalization of words does't matter, so _bedroom sophia_ will still 
-match if the area name in Home Assitant is _Bedroom Sophia_
+match if the area name in Home Assistant is _Bedroom Sophia_
 * Change the prompt which is used to have the LLM provide the correct data. 
 You don't need to translate this if you use a different language.
 
@@ -184,7 +184,7 @@ The language of the voice command is not relevant, the script has all descriptio
 2. Allow the LLM integration to access your house, otherwise it won't be able to use the script as a tool
 3. Import the Blueprint using the button above
 4. Create a script using the blueprint, optionally you can adjust the prompt settings which are the basis on how the script will be used by the LLM
-5. Optionally add additional actions to be performed after the Music Assitant play media step while setting up the script
+5. Optionally add additional actions to be performed after the Music Assistant play media step while setting up the script
 5. Save the script, make sure to give it a clear description, as that is what will be used by the LLM to determine when to use it (see example below). 
 6. Expose the script to Assist
 
