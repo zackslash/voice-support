@@ -36,7 +36,7 @@ blueprint:
     the Speech to Text conversion uses _Sofia_ instead of _Sophia_. Unfortunately
     aliases can't be used in the automation, as there is no template to get the aliases
     of areas or entities. Capitalization of words does't matter, so _bedroom sophia_
-    will still match if the area name in Home Assitant is _Bedroom Sophia_
+    will still match if the area name in Home Assistant is _Bedroom Sophia_
 
     * Change the prompt which is used to have the LLM provide the correct data. You
     don't need to translate this if you use a different language.

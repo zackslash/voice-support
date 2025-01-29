@@ -2,6 +2,10 @@
 
 # Changelog: Option 3 - Full LLM Script
 
+## 20250129
+
+* fix: correct assistant typo throughout
+
 ## 20250128
 
 * Initial version when the changelog was created
