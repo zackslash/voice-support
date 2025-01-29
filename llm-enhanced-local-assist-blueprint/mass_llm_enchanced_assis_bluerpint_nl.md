@@ -47,7 +47,7 @@ Elke zin moet:
 
 ### Hoe het doel voor de media bepaald wordt
 
-1. Indien er één of meerdere areas en/of één of meerdere mediaspelers vermeld wordenin het commando, en deze aan een area en/of speler voor Music Assitant gekoppeld kunenn worden, worden deze gebruikt. Als je de namen niet naar de LLM stuurt, en een area of speler vermeld die niet exact overeen komt, wordt de `No target response` reactie gegeven.
+1. Indien er één of meerdere areas en/of één of meerdere mediaspelers vermeld wordenin het commando, en deze aan een area en/of speler voor Music Assistant gekoppeld kunenn worden, worden deze gebruikt. Als je de namen niet naar de LLM stuurt, en een area of speler vermeld die niet exact overeen komt, wordt de `No target response` reactie gegeven.
 2. Als er geen area of speler in het commando vermeld wordt, maar er wel een area bepaald kan worden op basis van het apparaat waarvan het commando gestuurd wordt, wordt deze area gebruikt indien er ook een Musuc Assistant mediaspeler in die area is.
 3. Indien er geen area of mediaspeler vernoemd wordt, en deze ook niet bepaald kan worden op basis van het apparaat waarvan het commando komt, wordt de media gespeeld op de `Default Player`. Indien die niet ingesteld is, wordt de `No target response` reactie gegeven.
 
