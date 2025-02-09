@@ -7,7 +7,7 @@ blueprint:
     # Creates a script which will allow voice requests for Music Assistant
 
     * None of the settings below are required to change for this script to work. But
-    it could be that for your specific LLM integration some finetuning is required.
+    it could be that for your specific LLM integration some fine-tuning is required.
     To do that you can adjust the prompts sent to the LLM.
 
     * **Make sure to expose the script to Assist after creating it.**
@@ -36,7 +36,7 @@ blueprint:
 
     |`media_id`|The general description of the media, can be a song name, radio station,
     album name, etc. In case there are multiple values (e.g. 5 song titles) they will
-    be seperated by a semicolon (`;`)|
+    be separated by a semicolon (`;`)|
 
     |`media_type`|Will be one of the following: `"track"`, `"artist"`, `"album"`,
     `"playlist"`, `"radio"`|
@@ -80,11 +80,11 @@ blueprint:
         default_player:
           name: Default Player
           description:
-            "The default Music Assistant player which will be used in case
-            it is not clear from the request in which area or on which player the
-            request should be played
+            "The default Music Assistant player which will be used if it is not
+            clear from the request in which area or on which player the request
+            should be played.
 
-            Leave empty in case you do not want a default player"
+            Leave empty if you do not want a default player."
           selector:
             entity:
               filter:
@@ -100,7 +100,7 @@ blueprint:
 
             When set to "Use player settings" it will use the "Don't stop the music" setting
             on the Music Assistant Player
-            
+
             When set to "Always" the player will continuously add new songs to
             the playlist.
 
@@ -109,9 +109,9 @@ blueprint:
           selector:
             select:
               options:
-              - Use player settings
-              - Always
-              - Never
+                - Use player settings
+                - Always
+                - Never
               multiple: false
               custom_value: false
               sort: false
@@ -120,13 +120,13 @@ blueprint:
       name: Prompt settings for the LLM
       icon: mdi:robot
       description:
-        You can use these settings to finetune the prompts for your specific
+        You can use these settings to fine-tune the prompts for your specific
         LLM (model).  In most cases the defaults should be fine.
       collapsed: true
       input:
         media_type_prompt:
           name: Media Type Prompt
-          description: The prompt which will be used to the LLM can provice the media_type
+          description: The prompt that the LLM will use to provide the media_type.
           selector:
             text:
               multiline: true
@@ -145,15 +145,15 @@ blueprint:
 
             - "playlist" if the search specifically requests a playlist.
 
-            - "radio" in case the search is a radio channel.
+            - "radio" if the search is a radio channel.
 
-            media_type is mandatory and must always be provided. In case a request
-            does not match any of these types, for example when music from a specific
-            genre is requested, then us "track" and provide a list of matching songs
+            media_type is mandatory and must always be provided. If a request does
+            not match any of these types, for example when music from a specific
+            genre is requested, then use "track" and provide a list of matching songs
             for the "media_id" parameter.'
         artist_prompt:
           name: Artist Prompt
-          description: The prompt which will be used to the LLM can provice the artist
+          description: The prompt that the LLM will use to provide the artist.
           selector:
             text:
               multiline: true
@@ -161,11 +161,11 @@ blueprint:
           default:
             '"artist" is the artist the user requests to play, or the artist
             of a specific track if the user mentions it while requesting to play a
-            specific song. In case the artist is unknown or there are multiple artists
+            specific song. If the artist is unknown or there are multiple artists
             requested, use an empty string.'
         album_prompt:
           name: Album Prompt
-          description: The prompt which will be used to the LLM can provice the album
+          description: The prompt that the LLM will use to provide the album.
           selector:
             text:
               multiline: true
@@ -173,11 +173,11 @@ blueprint:
           default:
             '"album" is the album the user requests to play, or the album a
             specific track is from if the user mentions it when requesting to play
-            a specific song. In case the album is unknown or there are multiple albums
+            a specific song. If the album is unknown or there are multiple albums
             requested, use an empty string.'
         media_id_prompt:
           name: Media ID Prompt
-          description: The prompt which will be used to the LLM can provice the media_id
+          description: The prompt that the LLM will use to provide the media_id.
           selector:
             text:
               multiline: true
@@ -191,27 +191,27 @@ blueprint:
             "track" and "artist" can be a single value or multiple values.
 
             - If the search is about a track: Then media_id is the track name or a
-            list of track names (use a semicolon as seperator). In case there are
+            list of track names (use a semicolon as separator). If there are
             multiple artists in the result, use both the artist name and song name
             separated by a dash as track name (example: "Artist name - Song name").
-            In case all songs are from the same artist, use the artist for the "artist"
+            If all songs are from the same artist, use the artist for the "artist"
             parameter, and only use the song names as track name.
 
             - If the search is about an album: Then media_id is the album name or
-            a list of album names (use a semicolon as seperator).
+            a list of album names (use a semicolon as separator).
 
             - If the search is about an artist: Then media_id is the artist name.
 
             - If the search is a specific playlist: Then media_id is the requested
-            playlist.
+            playlist without the word playlist at the start or end (example: instead of
+            "Favorite Songs playlist" return "Favorite Songs").
 
             - If the search is a radio channel: Then media_id is the requested channel.
 
             This is a mandatory argument and must always be provided.'
         media_description_prompt:
           name: Media Description Prompt
-          description: 
-            'The prompt which will be used to the LLM can provice the media description'
+          description: "The prompt that the LLM will use to provide the media description."
           selector:
             text:
               multiline: true
@@ -224,43 +224,43 @@ blueprint:
             "media_description" should be "the best Queen songs"'
         area_prompt:
           name: Area Prompt
-          description: The prompt which will be used to the LLM can provice the media_id
+          description: The prompt that the LLM will use to provide the area.
           selector:
             text:
               multiline: true
               multiple: false
           default:
-            'The area or areas for which the music is requested. In case the request 
-            does not mention a target (either an area or a player), use the area 
+            'The area or areas for which the music is requested. If the request
+            does not mention a target (either an area or a player), use the area
             the request comes from.
 
-            In case the area can not be determined from the request, or the device
+            If the area can not be determined from the request, or the device
             the request comes from, do not use this parameter.
 
-            Only use both the "area" parameter and the "media_player" parameter together 
-            in case both are specifically used in the request.'
+            Only use both the "area" parameter and the "media_player" parameter together
+            if both are specifically used in the request.'
         media_player_prompt:
           name: Media Player Prompt
-          description: The prompt which will be used to the LLM can provice the media_id
+          description: The prompt that the LLM will use to provide the media player.
           selector:
             text:
               multiline: true
               multiple: false
           default:
-            'Only use in case the request specifically mentions a media player  or
-            multiple media players to play the music on. This has to be the entity_id
+            'Only use "media_player" if the request specifically mentions a media player or
+            multiple media players on which to play the music. This has to be the entity_id
             of a media player provided by the Music Assistant integration.
 
-             Only use both the "area" parameter and the "media_player" parameter together 
-            in case both are specifically used in the request.'
+            Only use both the "area" parameter and the "media_player" parameter together
+            if both are specifically used in the request.'
     addition_conditions_actions:
       name: Additional actions
       icon: mdi:wrench
       description:
         You can add additional actions to be performed after the Music
         Assistant play media action is started. Variables which can always be used
-        are media_id, media_type, album, artist. Based on the request the variables
-        area and media_player can also be available
+        are media_id, media_type, album, artist. Based on the request, the variables
+        area and media_player can also be available.
       collapsed: true
       input:
         actions:
@@ -271,7 +271,7 @@ blueprint:
 mode: parallel
 max_exceeded: silent
 description:
-  This script is used to play music based on a voice request Use the paramters
+  This script is used to play music based on a voice request. Use the parameters
   as described in the description of each parameter.
 fields:
   media_type:
@@ -332,27 +332,27 @@ sequence:
   - variables:
       version: 20250128
       default_player: !input default_player
-      player_data: "{% set ma = integration_entities('music_assistant') %} 
-        
+      player_data: "{% set ma = integration_entities('music_assistant') %}
+
         {% set ma_names = ma | map('state_attr', 'friendly_name') | list %}
-        
-        {% set ns = namespace(players=[]) %} {% for player in media_player 
+
+        {% set ns = namespace(players=[]) %} {% for player in media_player
         | default([], true) %}
 
-        {% if player in ma %} 
-        
-        {% set ns.players = ns.players + [player] %} 
-        
+        {% if player in ma %}
+
+        {% set ns.players = ns.players + [player] %}
+
         {% elif player in ma_names %}
-        
+
         {% set entity = ma | select('is_state_attr', 'friendly_name', player) | list %}
-        
+
         {% set ns.players = ns.players + entity %}
-        
-        {% endif %} 
-        
-        {% endfor %} 
-        
+
+        {% endif %}
+
+        {% endfor %}
+
         {{ ns.players }}"
       target_data:
         area_id: "{{ area | default('NA', true) }}"
