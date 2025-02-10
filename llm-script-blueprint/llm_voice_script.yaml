@@ -57,7 +57,7 @@ blueprint:
 
     |`media_player`|The Music Assistant media player(s) determined by the LLM on which
     the request will be played. The variable will be undefined if there was no
-    media player provided in the request. If it it defined, it should be a list of
+    media player provided in the request. If it is defined, it should be a list of
     entity_ids, but it could be the LLM provided names instead.
 
     |`default_player`|The default player provided when setting up the script or `none`
