@@ -494,7 +494,7 @@ triggers:
 actions:
   - alias: Store input from blueprint in variables so they can be used in the prompt
     variables:
-      version: 20250128
+      version: 20250210
       expose_areas: !input expose_areas
       expose_players: !input expose_players
       prompt:
@@ -577,10 +577,8 @@ actions:
       response: "{% if iif(target.get('area_id') and target.get('entity_id')) %}
         area_player {% elif iif(target.get('area_id')) %} only_area {% elif iif(target.get('entity_id'))
         %} only_player {% else %} no_target {% endif %}"
-      only_device_area: "{{ target.get('area_id', []) == [device_area] }}"
       area_list:
-        "{{ [] if only_device_area else target.get('area_id', []) | map('area_name')
-        | list }}"
+        "{{ target.get('area_id', []) | map('area_name') | list }}"
       area_info:
         "{{ area_list[:-1] | join(', ') ~ ' ' ~ combine ~ ' ' ~ area_list[-1]
         if area_list | count > 2 else area_list | join(' ' ~ combine ~ ' ') }}"
