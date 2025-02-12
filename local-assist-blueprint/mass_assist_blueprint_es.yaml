@@ -113,7 +113,7 @@ blueprint:
               multiline: false
               multiple: true
           default:
-            - "(reproduce|pon) [el ](álbum|ep|disco|compilación|sencillo) {media_name} [de [(el|la) ][(artista|banda|grupo) ]{artist}] [(en|usando) [el ]{area_or_player_name}][ (con|usando) {radio_mode}]"
+            - "(reproduce|pon) [el ](álbum|ep|disco|compilación|sencillo) {media_name} [(de|del) [la ][(artista|banda|grupo) ]{artist}] [(en|usando) [(el|la) ]{area_or_player_name}][ (con|usando) {radio_mode}]"
         track_trigger:
           name: Activador de pista
           description: Las sentencias de activación para solicitar una pista específica.
@@ -122,7 +122,7 @@ blueprint:
               multiline: false
               multiple: true
           default:
-            - "(reproduce|pon) [(el|la) ](pista|canción|tema) {media_name} [de [(el|la) ][(artista|banda|grupo) ]{artist}] [(en|usando) [el ]{area_or_player_name}][ (con|usando) {radio_mode}]"
+            - "(reproduce|pon) [(el|la) ](pista|canción|tema) {media_name} [(de|del) [la ][(artista|banda|grupo) ]{artist}] [(en|usando) [el|la ]{area_or_player_name}][ (con|usando) {radio_mode}]"
         artist_trigger:
           name: Activador de artista
           description: Las sentencias de activación para solicitar música de un artista específico.
@@ -131,7 +131,7 @@ blueprint:
               multiline: false
               multiple: true
           default:
-            - "(reproduce|pon) [(el|la|a|al) ][(artista|banda|grupo) ]{media_name} [(en|usando) [el ]{area_or_player_name}][ (con|usando) {radio_mode}]"
+            - "(reproduce|pon) [(el|la|a|al|a la) ][(artista|banda|grupo) ]{media_name} [(en|usando) [el|la ]{area_or_player_name}][ (con|usando) {radio_mode}]"
         radio_trigger:
           name: Activador de radio
           description: Las sentencias de activación para solicitar una estación de radio específica.
@@ -140,7 +140,7 @@ blueprint:
               multiline: false
               multiple: true
           default:
-            - "(reproduce|pon) [la ]((estación de radio)|(radio)|(emisora)) {media_name} [(en|usando) [el ]{area_or_player_name}]"
+            - "(reproduce|pon) [la ]((estación de radio)|(radio)|(emisora)) {media_name} [(en|usando) [el|la ]{area_or_player_name}]"
         playlist_trigger:
           name: Activador de lista
           description: Las sentencias de activación para solicitar una lista específica.
@@ -149,7 +149,7 @@ blueprint:
               multiline: false
               multiple: true
           default:
-            - "(reproduce|pon) [la ]lista {media_name} [(en|usando) [el ]{area_or_player_name}][ (con|usando) {radio_mode}]"
+            - "(reproduce|pon) [la ]lista {media_name} [(en|usando) [el|la ]{area_or_player_name}][ (con|usando) {radio_mode}]"
         response_input:
           name: Respuesta para Assist
           description: La respuesta que dará Assist.
