@@ -16,15 +16,15 @@ blueprint:
 
     #### Opcional
 
-    * Cambie la sentencia de activación o agregue más, también puede usar esto para traducir
-    la sentencia a su propio idioma.
+    * Cambie la frase de activación o agregue más, también puede usar esto para traducir
+    la frase a su propio idioma.
 
     * Cambie las respuestas o tradúzcalas a su propio idioma.
 
 
     ### Uso
 
-    Todas las sentencias deben:
+    Todas las frases deben:
 
     * comenzar con las palabras `reproduce` o `pon` seguidas del tipo de elemento `artista`/`pista`/`álbum`/`lista`/`radio` y luego el nombre del elemento
 
@@ -107,7 +107,7 @@ blueprint:
       input:
         album_trigger:
           name: Activador de álbum
-          description: Las sentencias de activación para solicitar un álbum específico.
+          description: Las frases de activación para solicitar un álbum específico.
           selector:
             text:
               multiline: false
@@ -116,7 +116,7 @@ blueprint:
             - "(reproduce|pon) [el ](álbum|ep|disco|compilación|sencillo) {media_name} [(de|del) [la ][(artista|banda|grupo) ]{artist}] [(en|usando) [(el|la) ]{area_or_player_name}][ (con|usando) {radio_mode}]"
         track_trigger:
           name: Activador de pista
-          description: Las sentencias de activación para solicitar una pista específica.
+          description: Las frases de activación para solicitar una pista específica.
           selector:
             text:
               multiline: false
@@ -125,7 +125,7 @@ blueprint:
             - "(reproduce|pon) [(el|la) ](pista|canción|tema) {media_name} [(de|del) [la ][(artista|banda|grupo) ]{artist}] [(en|usando) [el|la ]{area_or_player_name}][ (con|usando) {radio_mode}]"
         artist_trigger:
           name: Activador de artista
-          description: Las sentencias de activación para solicitar música de un artista específico.
+          description: Las frases de activación para solicitar música de un artista específico.
           selector:
             text:
               multiline: false
@@ -134,7 +134,7 @@ blueprint:
             - "(reproduce|pon) [(el|la|a|al|a la) ][(artista|banda|grupo) ]{media_name} [(en|usando) [el|la ]{area_or_player_name}][ (con|usando) {radio_mode}]"
         radio_trigger:
           name: Activador de radio
-          description: Las sentencias de activación para solicitar una estación de radio específica.
+          description: Las frases de activación para solicitar una estación de radio específica.
           selector:
             text:
               multiline: false
@@ -143,7 +143,7 @@ blueprint:
             - "(reproduce|pon) [la ]((estación de radio)|(radio)|(emisora)) {media_name} [(en|usando) [el|la ]{area_or_player_name}]"
         playlist_trigger:
           name: Activador de lista
-          description: Las sentencias de activación para solicitar una lista específica.
+          description: Las frases de activación para solicitar una lista específica.
           selector:
             text:
               multiline: false
