@@ -59,7 +59,7 @@ blueprint:
 
     pon el álbum Jagged Little Pill en el estudio
 
-    pon el álbum Greatest Hits de el artista James Taylor en la cocina
+    pon el álbum Greatest Hits del artista James Taylor en la cocina
 
     reproduce la pista New Years Day en el dormitorio
 
@@ -77,9 +77,7 @@ blueprint:
 
     reproduce la banda U2
 
-    pon Carolina Durante
-
-    reproduce el disco Elige Tu Propia Aventura de Carolina Durante
+    pon el disco Elige Tu Propia Aventura de Carolina Durante
 
 
     ```"
@@ -113,7 +111,7 @@ blueprint:
               multiline: false
               multiple: true
           default:
-            - "(reproduce|pon) [el ](álbum|ep|disco|compilación|sencillo) {media_name} [(de|del) [la ][(artista|banda|grupo) ]{artist}] [(en|usando) [(el|la) ]{area_or_player_name}][ (con|usando) {radio_mode}]"
+            - "(reproduce|pon) [(el|la) ](álbum|ep|disco|compilación|sencillo) {media_name} [(de|del|de la) [(artista|banda|grupo) ]{artist}] [(en|usando) [(el|la) ]{area_or_player_name}][ (con|usando) {radio_mode}]"
         track_trigger:
           name: Activador de pista
           description: Las frases de activación para solicitar una pista específica.
@@ -122,7 +120,7 @@ blueprint:
               multiline: false
               multiple: true
           default:
-            - "(reproduce|pon) [(el|la) ](pista|canción|tema) {media_name} [(de|del) [la ][(artista|banda|grupo) ]{artist}] [(en|usando) [el|la ]{area_or_player_name}][ (con|usando) {radio_mode}]"
+            - "(reproduce|pon) [(el|la) ](pista|canción|tema) {media_name} [(de|del|de la) [(artista|banda|grupo) ]{artist}] [(en|usando) [(el|la) ]{area_or_player_name}][ (con|usando) {radio_mode}]"
         artist_trigger:
           name: Activador de artista
           description: Las frases de activación para solicitar música de un artista específico.
@@ -131,7 +129,7 @@ blueprint:
               multiline: false
               multiple: true
           default:
-            - "(reproduce|pon) [(el|la|a|al|a la) ][(artista|banda|grupo) ]{media_name} [(en|usando) [el|la ]{area_or_player_name}][ (con|usando) {radio_mode}]"
+            - "(reproduce|pon) [(el|la|a|al|a la) ](artista|banda|grupo) {media_name} [(en|usando) [(el|la) ]{area_or_player_name}][ (con|usando) {radio_mode}]"
         radio_trigger:
           name: Activador de radio
           description: Las frases de activación para solicitar una estación de radio específica.
@@ -140,7 +138,7 @@ blueprint:
               multiline: false
               multiple: true
           default:
-            - "(reproduce|pon) [la ]((estación de radio)|(radio)|(emisora)) {media_name} [(en|usando) [el|la ]{area_or_player_name}]"
+            - "(reproduce|pon) [la ]((estación de radio)|(radio)|(emisora)) {media_name} [(en|usando) [(el|la) ]{area_or_player_name}]"
         playlist_trigger:
           name: Activador de lista
           description: Las frases de activación para solicitar una lista específica.
@@ -149,7 +147,7 @@ blueprint:
               multiline: false
               multiple: true
           default:
-            - "(reproduce|pon) [la ]lista {media_name} [(en|usando) [el|la ]{area_or_player_name}][ (con|usando) {radio_mode}]"
+            - "(reproduce|pon) [la ]lista {media_name} [(en|usando) [(el|la) ]{area_or_player_name}][ (con|usando) {radio_mode}]"
         response_input:
           name: Respuesta para Assist
           description: La respuesta que dará Assist.
