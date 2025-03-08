@@ -35,11 +35,11 @@ blueprint:
     |---|---|
 
     |`media_id`|The general description of the media, can be a song name, radio station,
-    album name, etc. If there are multiple values (e.g. 5 song titles) they will
+    album name, audiobook (or book) name, etc. If there are multiple values (e.g. 5 song titles) they will
     be separated by a semicolon (`;`)|
 
     |`media_type`|Will be one of the following: `"track"`, `"artist"`, `"album"`,
-    `"playlist"`, `"radio"`|
+    `"playlist"`, `"radio"`, `"audiobook"`|
 
     |`artist`|The artist requested in the voice command. Will be empty in case the
     artist is not relevant or when there are multiple artists requested|
@@ -146,6 +146,8 @@ blueprint:
             - "playlist" if the search specifically requests a playlist.
 
             - "radio" if the search is a radio channel.
+
+            - "audiobook" if the search is about an audiobook or book.
 
             media_type is mandatory and must always be provided. If a request does
             not match any of these types, for example when music from a specific
@@ -283,6 +285,7 @@ fields:
           - artist
           - playlist
           - radio
+          - audiobook
     name: Media Type
     description: !input media_type_prompt
     required: true
